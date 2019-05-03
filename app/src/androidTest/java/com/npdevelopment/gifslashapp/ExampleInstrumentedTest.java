@@ -1,4 +1,4 @@
-package com.npdevelopment.giphyslash;
+package com.npdevelopment.gifslashapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

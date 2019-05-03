@@ -1,4 +1,4 @@
-package com.npdevelopment.giphyslash.database;
+package com.npdevelopment.gifslashapp.database;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

@@ -1,12 +1,12 @@
-package com.npdevelopment.giphyslash.database;
+package com.npdevelopment.gifslashapp.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.npdevelopment.giphyslash.models.Favorite;
-import com.npdevelopment.giphyslash.models.Setting;
+import com.npdevelopment.gifslashapp.models.Favorite;
+import com.npdevelopment.gifslashapp.models.Setting;
 
 @Database(entities = {Favorite.class, Setting.class}, version = 1, exportSchema = false)
 public abstract class GiphyRoomDatabase extends RoomDatabase {

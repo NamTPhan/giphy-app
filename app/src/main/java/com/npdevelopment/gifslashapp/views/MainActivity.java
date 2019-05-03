@@ -1,4 +1,4 @@
-package com.npdevelopment.giphyslash.views;
+package com.npdevelopment.gifslashapp.views;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,10 +12,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import com.npdevelopment.giphyslash.R;
-import com.npdevelopment.giphyslash.fragments.bottom_navigation.CategoriesFragment;
-import com.npdevelopment.giphyslash.fragments.bottom_navigation.FavoritesFragment;
-import com.npdevelopment.giphyslash.fragments.bottom_navigation.TrendingFragment;
+import com.npdevelopment.gifslashapp.R;
+import com.npdevelopment.gifslashapp.fragments.bottom_navigation.CategoriesFragment;
+import com.npdevelopment.gifslashapp.fragments.bottom_navigation.FavoritesFragment;
+import com.npdevelopment.gifslashapp.fragments.bottom_navigation.TrendingFragment;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,8 +1,4 @@
-package com.npdevelopment.giphyslash.database;
-
-import com.npdevelopment.giphyslash.models.GiphyWrapper;
-
-import retrofit2.Call;
+package com.npdevelopment.gifslashapp.database;
 
 public class GiphyRepository {
 

@@ -1,4 +1,4 @@
-package com.npdevelopment.giphyslash.fragments.bottom_navigation;
+package com.npdevelopment.gifslashapp.fragments.top_navigation_tabs;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,13 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.npdevelopment.giphyslash.R;
+import com.npdevelopment.gifslashapp.R;
 
-public class FavoritesFragment extends Fragment {
+public class TrendingStickerFragment extends Fragment {
+
+    private View view;
+
+    public TrendingStickerFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_favorites, container, false);
+        view = inflater.inflate(R.layout.fragment_trending_stickers, container, false);
+        return view;
     }
 }

@@ -1,4 +1,4 @@
-package com.npdevelopment.giphyslash.fragments.top_navigation_tabs;
+package com.npdevelopment.gifslashapp.fragments.top_navigation_tabs;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

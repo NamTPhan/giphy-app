@@ -1,4 +1,4 @@
-package com.npdevelopment.giphyslash.models;
+package com.npdevelopment.gifslashapp.models;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

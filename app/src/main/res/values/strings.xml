@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Giphy Slash</string>
+    <string name="app_name">GIF Slash</string>
     <string name="trending">Trending</string>
     <string name="categories">Categories</string>
     <string name="favorites">Favorites</string>
