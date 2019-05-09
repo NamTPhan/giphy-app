@@ -1,5 +1,6 @@
 package com.npdevelopment.gifslashapp.views.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,17 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Giphy;
+import com.npdevelopment.gifslashapp.views.MainActivity;
 
 import java.util.List;
 
 public class TrendingStickersAdapter extends RecyclerView.Adapter<TrendingStickersAdapter.ViewHolder> {
 
     private List<Giphy> stickerList;
+    private Context context;
 
-    public TrendingStickersAdapter(List<Giphy> stickerList) {
+    public TrendingStickersAdapter(Context context, List<Giphy> stickerList) {
         this.stickerList = stickerList;
+        this.context = context;
     }
 
     @NonNull
@@ -29,8 +34,13 @@ public class TrendingStickersAdapter extends RecyclerView.Adapter<TrendingSticke
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TrendingStickersAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull TrendingStickersAdapter.ViewHolder viewHolder, int position) {
+        // Gets a single item in the list from its position
+        final Giphy giphy = stickerList.get(position);
 
+        if (context.getClass().equals(MainActivity.class)) {
+            Glide.with(context).load(giphy.getImages().getImageFixedHeight().getUrl()).into(viewHolder.gifSticker);
+        }
     }
 
     @Override
@@ -38,13 +48,26 @@ public class TrendingStickersAdapter extends RecyclerView.Adapter<TrendingSticke
         return stickerList.size();
     }
 
+    /**
+     * Method for refreshing the data
+     *
+     * @param newList the list that has to be refreshed
+     */
+    public void refreshList(List<Giphy> newList) {
+        stickerList = newList;
+        if (newList != null) {
+            // Force the RecyclerView to refresh
+            this.notifyDataSetChanged();
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView imageView;
+        private ImageView gifSticker;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            gifSticker = itemView.findViewById(R.id.gif_sticker_image);
         }
     }
 }

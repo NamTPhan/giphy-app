@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center" >
+    android:gravity="center"
+    android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,8 +13,8 @@
 
         <ImageView
             android:id="@+id/powereByGiphy"
-            android:layout_width="285dp"
-            android:layout_height="56dp"
+            android:layout_width="282dp"
+            android:layout_height="47dp"
             android:layout_marginStart="63dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="63dp"
@@ -21,12 +22,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/giphy_horizontal_light" />
+            app:srcCompat="@drawable/placeholder" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_trending_gifs"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

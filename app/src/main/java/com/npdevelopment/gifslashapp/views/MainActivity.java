@@ -2,6 +2,7 @@ package com.npdevelopment.gifslashapp.views;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         fabRotateAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_anticlockwise);
 
         fabActions();
+        disableActionBarInLandScapeMode();
 
         // Link the correct ViewModel to the activity
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -82,6 +84,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Disable actionbar when the orientation is in landscape
+     */
+    public void disableActionBarInLandScapeMode() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getSupportActionBar().hide();
+        } else {
+            getSupportActionBar().show();
+        }
+    }
+
+    /**
+     * Contains all floating button actions
+     */
     private void fabActions() {
         fabPlus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,5 +135,60 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Random", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * Custom method to calculate number of columns for grid type recycler view
+     *
+     * @param base default column selection
+     * @return total columns based on screen size
+     */
+    public int calculateNumberOfColumns(int base) {
+        int columns = base;
+        String screenSize = getScreenSizeCategory();
+
+        if (screenSize.equals("small")) {
+            if (base != 1) {
+                columns = columns - 1;
+            }
+        } else if (screenSize.equals("normal")) {
+            // Do nothing
+        } else if (screenSize.equals("large")) {
+            columns += 2;
+        } else if (screenSize.equals("xlarge")) {
+            columns += 3;
+        }
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            columns = (int) (columns * 1.5);
+        }
+
+        return columns;
+    }
+
+    /**
+     * Custom method to get screen size category
+     *
+     * @return current screen layout
+     */
+    private String getScreenSizeCategory() {
+        int screenLayout = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+
+        switch (screenLayout) {
+            case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                // small screens are at least 426dp x 320dp
+                return "small";
+            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                // normal screens are at least 470dp x 320dp
+                return "normal";
+            case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                // large screens are at least 640dp x 480dp
+                return "large";
+            case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+                // xlarge screens are at least 960dp x 720dp
+                return "xlarge";
+            default:
+                return "undefined";
+        }
     }
 }

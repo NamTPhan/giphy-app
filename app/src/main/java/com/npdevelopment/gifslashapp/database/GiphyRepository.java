@@ -11,4 +11,8 @@ public class GiphyRepository {
     public Call<GiphyResponse> getAllTrendingGifs(int limit, String rating) {
         return giphyApiService.getAllTrendingGifs(limit, rating);
     }
+
+    public Call<GiphyResponse> getAllTrendingStickers(int limit, String rating) {
+        return giphyApiService.getAllTrendingStickers(limit, rating);
+    }
 }
