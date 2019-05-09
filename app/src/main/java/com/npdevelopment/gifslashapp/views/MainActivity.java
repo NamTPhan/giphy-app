@@ -1,6 +1,9 @@
 package com.npdevelopment.gifslashapp.views;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment selectedFragment;
     private FloatingActionButton fabPlus, fabSettings, fabRandom;
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAntiClockwise;
+    private MainViewModel mainViewModel;
     private boolean isOpen = false;
 
     @Override
@@ -44,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         fabActions();
 
+        // Link the correct ViewModel to the activity
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -63,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                 return true;
+            }
+        });
+
+        // Show error in toast if api call fails
+        mainViewModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
             }
         });
     }

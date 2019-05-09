@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GiphyApi {
 
-    public static final String BASE_URL = "";
+    public static final String BASE_URL = "https://api.giphy.com/";
 
     public static GiphyApiService create() {
 

@@ -11,9 +11,17 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "API_KEY", GiphyApiKey
+            resValue 'string', "api_key", GiphyApiKey
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "API_KEY", GiphyApiKey
+            resValue 'string', "api_key", GiphyApiKey
         }
     }
 }
@@ -38,8 +46,9 @@ dependencies {
     // Architecture Components
     def lifecycle_version = "1.1.1"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    //Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     // ROOM database
     def room_version = "1.1.1"
     implementation "android.arch.persistence.room:runtime:$room_version"
