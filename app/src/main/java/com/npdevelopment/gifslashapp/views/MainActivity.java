@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         // Link the correct ViewModel to the activity
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
+        // Bottom navigation switch
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
