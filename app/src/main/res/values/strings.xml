@@ -5,14 +5,17 @@
     <string name="favorites">Favorites</string>
     <string name="download">Download</string>
     <string name="share">Share</string>
+    <string name="settings">Settings</string>
     <string name="title">Title</string>
     <string name="submit">Submit</string>
+    <string name="save_button">Save</string>
     <string name="sticker_title">STICKERS</string>
     <string name="giphy_sticker_title">GIF/Sticker</string>
     <string name="description">Description</string>
     <string name="save_as_favorite">Save as Favorite</string>
     <string name="gif_title">GIFS</string>
     <string name="placeholder">Placeholder</string>
+    <string name="record_limit">Total GIFS/Stickers retrieved from Giphy</string>
 
     <string name="fields_required">All fields required!</string>
     <string name="success_message">Successfully saved!</string>
