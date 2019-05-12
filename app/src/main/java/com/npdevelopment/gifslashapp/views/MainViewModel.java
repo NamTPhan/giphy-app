@@ -34,7 +34,6 @@ public class MainViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<Giphy>> getAllTrendingGifs() {
         return mTrendingGifs;
-
     }
 
     public MutableLiveData<List<Giphy>> getAllTrendingStickers() {
