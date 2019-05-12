@@ -80,14 +80,10 @@ public class DisplayGiphyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.putExtra(Intent.EXTRA_TEXT, "Check this GIF out");
-//                String path = Images.Media.insertImage(getContentResolver(), loadedImage, "", null);
-                Uri imageUri = Uri.parse(giphyGifSticker.getImages().getImageFixedHeight().getUrl());
-
-                intent.putExtra(Intent.EXTRA_STREAM, imageUri);
-                intent.setType("image/*");
-                startActivity(Intent.createChooser(intent, "Share image via..."));
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.check_out_share));
+                intent.putExtra(Intent.EXTRA_TEXT, giphyGifSticker.getImages().getImageFixedHeight().getUrl());
+                startActivity(intent);
             }
         });
 
@@ -116,8 +112,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -172,7 +167,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         mTitle.setText(giphyGifSticker.getTitle());
     }
 
-    public void saveImageToGallery(String url) {
+    private void saveImageToGallery(String url) {
         File dir = new File(Environment.getExternalStorageDirectory()
                 + getString(R.string.save_to_folder));
 
@@ -183,12 +178,10 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         DownloadManager downloadManager = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
 
         Uri downloadUri = Uri.parse(url);
-        DownloadManager.Request request = new DownloadManager.Request(
-                downloadUri);
+        DownloadManager.Request request = new DownloadManager.Request(downloadUri);
 
         request.setAllowedNetworkTypes(
-                DownloadManager.Request.NETWORK_WIFI
-                        | DownloadManager.Request.NETWORK_MOBILE)
+                DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
                 .setAllowedOverRoaming(false).setTitle(getString(R.string.download))
                 .setDestinationInExternalPublicDir(getString(R.string.save_to_folder), getString(R.string.app_name) + ".gif");
 
