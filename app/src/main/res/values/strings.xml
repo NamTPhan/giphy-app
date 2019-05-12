@@ -7,11 +7,19 @@
     <string name="share">Share</string>
     <string name="title">Title</string>
     <string name="submit">Submit</string>
+    <string name="sticker_title">STICKERS</string>
     <string name="giphy_sticker_title">GIF/Sticker</string>
     <string name="description">Description</string>
     <string name="save_as_favorite">Save as Favorite</string>
     <string name="gif_title">GIFS</string>
-    <string name="sticker_title">STICKERS</string>
-    <string name="fields_required">All fields required!</string>
     <string name="placeholder">Placeholder</string>
+
+    <string name="fields_required">All fields required!</string>
+    <string name="success_message">Successfully saved!</string>
+    <string name="write_permission_required">Storage permission required!</string>
+    <string name="permission_granted">Permission granted!</string>
+    <string name="no_internet_connection">No internet connection!</string>
+    <string name="connection_failed">Connection failed!</string>
+
+    <string name="save_to_folder">/GifSlash</string>
 </resources>

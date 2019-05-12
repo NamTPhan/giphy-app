@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.database.GiphyRepository;
 import com.npdevelopment.gifslashapp.models.Giphy;
 import com.npdevelopment.gifslashapp.models.GiphyResponse;
@@ -34,7 +35,9 @@ public class MainViewModel extends AndroidViewModel {
     public MutableLiveData<List<Giphy>> getAllTrendingGifs() {
         return mTrendingGifs;
 
-    }public MutableLiveData<List<Giphy>> getAllTrendingStickers() {
+    }
+
+    public MutableLiveData<List<Giphy>> getAllTrendingStickers() {
         return mTrendingStickers;
     }
 
@@ -45,13 +48,13 @@ public class MainViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mTrendingGifs.setValue(response.body().getData());
                 } else {
-                    error.setValue("Api Error: " + response.message());
+                    error.setValue(String.valueOf(R.string.connection_failed));
                 }
             }
 
             @Override
             public void onFailure(Call<GiphyResponse> call, Throwable t) {
-                error.setValue("Api Error: " + t.getMessage());
+                error.setValue(String.valueOf(R.string.connection_failed));
             }
         });
     }
@@ -63,13 +66,13 @@ public class MainViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mTrendingStickers.setValue(response.body().getData());
                 } else {
-                    error.setValue("Api Error: " + response.message());
+                    error.setValue(String.valueOf(R.string.connection_failed));
                 }
             }
 
             @Override
             public void onFailure(Call<GiphyResponse> call, Throwable t) {
-                error.setValue("Api Error: " + t.getMessage());
+                error.setValue(String.valueOf(R.string.connection_failed));
             }
         });
     }
