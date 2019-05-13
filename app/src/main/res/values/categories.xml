@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="giphyCategories">
+        <item>Actions</item>
+        <item>Adjectives</item>
+        <item>Animals</item>
+        <item>Anime</item>
+        <item>Art and\n Design</item>
+        <item>Cartoons\n and\n Comics</item>
+        <item>Celebrities</item>
+        <item>Decades</item>
+        <item>Emotions</item>
+        <item>Fashion\n and\n Beauty</item>
+        <item>Food and\n Drinks</item>
+        <item>Gaming</item>
+        <item>Holidays</item>
+        <item>Interests</item>
+        <item>Memes</item>
+        <item>Movies</item>
+        <item>Music</item>
+        <item>Nature</item>
+        <item>News and\n Politics</item>
+        <item>Reactions</item>
+        <item>Science</item>
+        <item>Sports</item>
+        <item>Stickers</item>
+        <item>Transportation</item>
+        <item>TV</item>
+    </string-array>
+</resources>
