@@ -13,23 +13,22 @@ public class Favorite implements Parcelable {
 
     private String title;
     private String description;
-    private String date_saved;
-    private String image_url;
+    private String dateSaved;
+    private String imageUrl;
 
-    public Favorite(int id, String title, String description, String date_saved, String image_url) {
-        this.id = id;
+    public Favorite(String title, String description, String dateSaved, String imageUrl) {
         this.title = title;
         this.description = description;
-        this.date_saved = date_saved;
-        this.image_url = image_url;
+        this.dateSaved = dateSaved;
+        this.imageUrl = imageUrl;
     }
 
     protected Favorite(Parcel in) {
         id = in.readInt();
         title = in.readString();
         description = in.readString();
-        date_saved = in.readString();
-        image_url = in.readString();
+        dateSaved = in.readString();
+        imageUrl = in.readString();
     }
 
     public static final Creator<Favorite> CREATOR = new Creator<Favorite>() {
@@ -56,12 +55,12 @@ public class Favorite implements Parcelable {
         return description;
     }
 
-    public String getDate_saved() {
-        return date_saved;
+    public String getDateSaved() {
+        return dateSaved;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public void setId(int id) {
@@ -76,12 +75,12 @@ public class Favorite implements Parcelable {
         this.description = description;
     }
 
-    public void setDate_saved(String date_saved) {
-        this.date_saved = date_saved;
+    public void setDateSaved(String dateSaved) {
+        this.dateSaved = dateSaved;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
@@ -90,8 +89,8 @@ public class Favorite implements Parcelable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", date_saved='" + date_saved + '\'' +
-                ", image_url='" + image_url + '\'' +
+                ", date_saved='" + dateSaved + '\'' +
+                ", image_url='" + imageUrl + '\'' +
                 '}';
     }
 
@@ -105,7 +104,7 @@ public class Favorite implements Parcelable {
         parcel.writeInt(id);
         parcel.writeString(title);
         parcel.writeString(description);
-        parcel.writeString(date_saved);
-        parcel.writeString(image_url);
+        parcel.writeString(dateSaved);
+        parcel.writeString(imageUrl);
     }
 }

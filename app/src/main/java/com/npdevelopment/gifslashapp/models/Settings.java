@@ -6,7 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 @Entity(tableName = "settings_table")
-public class Setting implements Parcelable {
+public class Settings implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -15,29 +15,28 @@ public class Setting implements Parcelable {
     private String rating;
     private String language;
 
-    public Setting(int id, int limit, String rating, String language) {
-        this.id = id;
+    public Settings(int limit, String rating, String language) {
         this.limit = limit;
         this.rating = rating;
         this.language = language;
     }
 
-    protected Setting(Parcel in) {
+    protected Settings(Parcel in) {
         id = in.readInt();
         limit = in.readInt();
         rating = in.readString();
         language = in.readString();
     }
 
-    public static final Creator<Setting> CREATOR = new Creator<Setting>() {
+    public static final Creator<Settings> CREATOR = new Creator<Settings>() {
         @Override
-        public Setting createFromParcel(Parcel in) {
-            return new Setting(in);
+        public Settings createFromParcel(Parcel in) {
+            return new Settings(in);
         }
 
         @Override
-        public Setting[] newArray(int size) {
-            return new Setting[size];
+        public Settings[] newArray(int size) {
+            return new Settings[size];
         }
     };
 
@@ -75,7 +74,7 @@ public class Setting implements Parcelable {
 
     @Override
     public String toString() {
-        return "Setting{" +
+        return "Settings{" +
                 "id=" + id +
                 ", limit=" + limit +
                 ", rating='" + rating + '\'' +

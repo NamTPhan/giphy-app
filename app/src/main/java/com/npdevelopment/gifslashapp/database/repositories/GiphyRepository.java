@@ -1,5 +1,7 @@
-package com.npdevelopment.gifslashapp.database;
+package com.npdevelopment.gifslashapp.database.repositories;
 
+import com.npdevelopment.gifslashapp.database.GiphyApi;
+import com.npdevelopment.gifslashapp.database.GiphyApiService;
 import com.npdevelopment.gifslashapp.models.GiphyResponse;
 
 import retrofit2.Call;

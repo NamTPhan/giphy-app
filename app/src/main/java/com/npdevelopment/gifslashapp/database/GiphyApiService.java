@@ -16,7 +16,7 @@ public interface GiphyApiService {
     Call<GiphyResponse> getAllTrendingGifs(@Query("limit") int limit, @Query("rating") String rating);
 
     @GET("/v1/gifs/random?api_key=" + apiKey)
-    Call<GiphyResponse> getRandomGif(@Query("tag") String tag, @Query("rating") String rating);
+    Call<GiphyResponse> getRandomGif(@Query("rating") String rating);
 
     @GET("/v1/gifs/search?api_key=" + apiKey)
     Call<GiphyResponse> getSelectedCategoryGif(@Query("q") String searchQuery,

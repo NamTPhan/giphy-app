@@ -31,6 +31,13 @@ public class Images implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return "Images{" +
+                "imageFixedHeight=" + imageFixedHeight +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Giphy;
-import com.npdevelopment.gifslashapp.views.DisplayGiphyActivity;
-import com.npdevelopment.gifslashapp.views.MainActivity;
+import com.npdevelopment.gifslashapp.views.ui.DisplayGiphyActivity;
+import com.npdevelopment.gifslashapp.views.ui.MainActivity;
 
 import java.util.List;
 

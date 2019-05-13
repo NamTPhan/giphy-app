@@ -1,4 +1,4 @@
-package com.npdevelopment.gifslashapp.database;
+package com.npdevelopment.gifslashapp.database.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -17,8 +17,14 @@ public interface FavoriteDao {
     @Insert
     void insert(Favorite favorite);
 
+    @Insert
+    void insert(List<Favorite> favorite);
+
     @Delete
     void delete(Favorite favorite);
+
+    @Delete
+    void delete(List<Favorite> favorite);
 
     @Update
     void update(Favorite favorite);

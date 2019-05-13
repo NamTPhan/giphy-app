@@ -1,9 +1,11 @@
-package com.npdevelopment.gifslashapp.views;
+package com.npdevelopment.gifslashapp.views.ui;
 
+import android.content.res.Configuration;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -29,6 +31,13 @@ public class SettingsActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.save_settings_btn);
 
         setSizePopupWindow();
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     /**
@@ -41,6 +50,10 @@ public class SettingsActivity extends AppCompatActivity {
         int width = displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
 
-        getWindow().setLayout((int) (width * percentageWidth), (int) (height * percentageheight));
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getWindow().setLayout((int) (width * percentageWidth), height);
+        } else {
+            getWindow().setLayout((int) (width * percentageWidth), (int) (height * percentageheight));
+        }
     }
 }

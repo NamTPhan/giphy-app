@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.npdevelopment.gifslashapp.R;
-import com.npdevelopment.gifslashapp.views.MainActivity;
+import com.npdevelopment.gifslashapp.views.ui.MainActivity;
 import com.npdevelopment.gifslashapp.views.adapters.CategoriesAdapter;
 
 import java.util.Arrays;

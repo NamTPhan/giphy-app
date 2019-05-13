@@ -71,6 +71,18 @@ public class Giphy implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return "Giphy{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", rating='" + rating + '\'' +
+                ", title='" + title + '\'' +
+                ", is_sticker=" + is_sticker +
+                ", images=" + images +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

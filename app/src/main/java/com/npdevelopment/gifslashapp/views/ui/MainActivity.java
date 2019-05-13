@@ -1,4 +1,4 @@
-package com.npdevelopment.gifslashapp.views;
+package com.npdevelopment.gifslashapp.views.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -18,9 +18,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.npdevelopment.gifslashapp.R;
+import com.npdevelopment.gifslashapp.database.GiphyRoomDatabase;
 import com.npdevelopment.gifslashapp.fragments.bottom_navigation.CategoriesFragment;
 import com.npdevelopment.gifslashapp.fragments.bottom_navigation.FavoritesFragment;
 import com.npdevelopment.gifslashapp.fragments.bottom_navigation.TrendingFragment;
+import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabPlus, fabSettings, fabRandom;
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAntiClockwise;
 
-    private MainViewModel mainViewModel;
+    private MainViewModel mMainViewModel;
+    private GiphyRoomDatabase database;
 
     private boolean isOpen = false;
 
@@ -50,11 +53,13 @@ public class MainActivity extends AppCompatActivity {
         fabRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_clockwise);
         fabRotateAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_anticlockwise);
 
+        database = GiphyRoomDatabase.getDatabase(this);
+
         fabActions();
         disableActionBarInLandScapeMode();
 
         // Link the correct ViewModel to the activity
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         // Bottom navigation switch
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Show error in toast if api call fails
-        mainViewModel.getError().observe(this, new Observer<String>() {
+        mMainViewModel.getError().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String message) {
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();

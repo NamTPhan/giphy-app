@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Giphy;
-import com.npdevelopment.gifslashapp.views.MainActivity;
-import com.npdevelopment.gifslashapp.views.MainViewModel;
+import com.npdevelopment.gifslashapp.views.ui.MainActivity;
+import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
 import com.npdevelopment.gifslashapp.views.adapters.TrendingStickersAdapter;
 
 import java.util.ArrayList;

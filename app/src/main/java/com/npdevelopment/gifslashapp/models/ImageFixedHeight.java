@@ -55,6 +55,16 @@ public class ImageFixedHeight implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return "ImageFixedHeight{" +
+                "url='" + url + '\'' +
+                ", width='" + width + '\'' +
+                ", height='" + height + '\'' +
+                ", size='" + size + '\'' +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

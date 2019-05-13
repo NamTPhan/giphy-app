@@ -1,12 +1,11 @@
-package com.npdevelopment.gifslashapp.views;
+package com.npdevelopment.gifslashapp.viewmodels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.npdevelopment.gifslashapp.R;
-import com.npdevelopment.gifslashapp.database.GiphyRepository;
+import com.npdevelopment.gifslashapp.database.repositories.GiphyRepository;
 import com.npdevelopment.gifslashapp.models.Giphy;
 import com.npdevelopment.gifslashapp.models.GiphyResponse;
 
@@ -47,13 +46,13 @@ public class MainViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mTrendingGifs.setValue(response.body().getData());
                 } else {
-                    error.setValue(String.valueOf(R.string.connection_failed));
+                    error.setValue(response.toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<GiphyResponse> call, Throwable t) {
-                error.setValue(String.valueOf(R.string.connection_failed));
+            public void onFailure(Call<GiphyResponse> call, Throwable throwable) {
+                error.setValue(throwable.toString());
             }
         });
     }
@@ -65,13 +64,13 @@ public class MainViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mTrendingStickers.setValue(response.body().getData());
                 } else {
-                    error.setValue(String.valueOf(R.string.connection_failed));
+                    error.setValue(response.toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<GiphyResponse> call, Throwable t) {
-                error.setValue(String.valueOf(R.string.connection_failed));
+            public void onFailure(Call<GiphyResponse> call, Throwable throwable) {
+                error.setValue(throwable.toString());
             }
         });
     }
