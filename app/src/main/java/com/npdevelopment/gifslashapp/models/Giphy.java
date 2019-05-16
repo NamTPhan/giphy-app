@@ -1,5 +1,6 @@
 package com.npdevelopment.gifslashapp.models;
 
+import android.arch.persistence.room.Ignore;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -20,7 +21,7 @@ public class Giphy implements Parcelable {
     private String title;
 
     @SerializedName("is_sticker")
-    private int is_sticker;
+    private int isSticker;
 
     @SerializedName("images")
     private Images images;
@@ -30,7 +31,7 @@ public class Giphy implements Parcelable {
         type = in.readString();
         rating = in.readString();
         title = in.readString();
-        is_sticker = in.readInt();
+        isSticker = in.readInt();
         images = in.readParcelable(Images.class.getClassLoader());
     }
 
@@ -62,8 +63,8 @@ public class Giphy implements Parcelable {
         return title;
     }
 
-    public int getIs_sticker() {
-        return is_sticker;
+    public int getIsSticker() {
+        return isSticker;
     }
 
     public Images getImages() {
@@ -77,7 +78,7 @@ public class Giphy implements Parcelable {
                 ", type='" + type + '\'' +
                 ", rating='" + rating + '\'' +
                 ", title='" + title + '\'' +
-                ", is_sticker=" + is_sticker +
+                ", isSticker=" + isSticker +
                 ", images=" + images +
                 '}';
     }
@@ -93,7 +94,7 @@ public class Giphy implements Parcelable {
         parcel.writeString(type);
         parcel.writeString(rating);
         parcel.writeString(title);
-        parcel.writeInt(is_sticker);
+        parcel.writeInt(isSticker);
         parcel.writeParcelable(images, flags);
     }
 }

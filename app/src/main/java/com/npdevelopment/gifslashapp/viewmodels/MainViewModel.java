@@ -7,7 +7,8 @@ import android.support.annotation.NonNull;
 
 import com.npdevelopment.gifslashapp.database.repositories.GiphyRepository;
 import com.npdevelopment.gifslashapp.models.Giphy;
-import com.npdevelopment.gifslashapp.models.GiphyResponse;
+import com.npdevelopment.gifslashapp.models.GiphyResponseList;
+import com.npdevelopment.gifslashapp.models.GiphyResponseObject;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<String> error = new MutableLiveData<>();
     private MutableLiveData<List<Giphy>> mTrendingGifs = new MutableLiveData<>();
     private MutableLiveData<List<Giphy>> mTrendingStickers = new MutableLiveData<>();
+    private MutableLiveData<Giphy> mRandomGif = new MutableLiveData<>();
+    private MutableLiveData<Giphy> mRandomSticker = new MutableLiveData<>();
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -39,10 +42,18 @@ public class MainViewModel extends AndroidViewModel {
         return mTrendingStickers;
     }
 
+    public MutableLiveData<Giphy> getOneRandomGif() {
+        return mRandomGif;
+    }
+
+    public MutableLiveData<Giphy> getOneRandomSticker() {
+        return mRandomSticker;
+    }
+
     public void getTrendingGiphyGifs(int limit, String rating) {
-        mGiphyRepository.getAllTrendingGifs(limit, rating).enqueue(new Callback<GiphyResponse>() {
+        mGiphyRepository.getAllTrendingGifs(limit, rating).enqueue(new Callback<GiphyResponseList>() {
             @Override
-            public void onResponse(Call<GiphyResponse> call, Response<GiphyResponse> response) {
+            public void onResponse(Call<GiphyResponseList> call, Response<GiphyResponseList> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     mTrendingGifs.setValue(response.body().getData());
                 } else {
@@ -51,16 +62,16 @@ public class MainViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<GiphyResponse> call, Throwable throwable) {
+            public void onFailure(Call<GiphyResponseList> call, Throwable throwable) {
                 error.setValue(throwable.toString());
             }
         });
     }
 
     public void getTrendingGiphyStickers(int limit, String rating) {
-        mGiphyRepository.getAllTrendingStickers(limit, rating).enqueue(new Callback<GiphyResponse>() {
+        mGiphyRepository.getAllTrendingStickers(limit, rating).enqueue(new Callback<GiphyResponseList>() {
             @Override
-            public void onResponse(Call<GiphyResponse> call, Response<GiphyResponse> response) {
+            public void onResponse(Call<GiphyResponseList> call, Response<GiphyResponseList> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     mTrendingStickers.setValue(response.body().getData());
                 } else {
@@ -69,7 +80,43 @@ public class MainViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<GiphyResponse> call, Throwable throwable) {
+            public void onFailure(Call<GiphyResponseList> call, Throwable throwable) {
+                error.setValue(throwable.toString());
+            }
+        });
+    }
+
+    public void getRandomGif(String rating) {
+        mGiphyRepository.getRandomGif(rating).enqueue(new Callback<GiphyResponseObject>() {
+            @Override
+            public void onResponse(Call<GiphyResponseObject> call, Response<GiphyResponseObject> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mRandomGif.setValue(response.body().getData());
+                } else {
+                    error.setValue(response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GiphyResponseObject> call, Throwable throwable) {
+                error.setValue(throwable.toString());
+            }
+        });
+    }
+
+    public void getRandomSticker(String rating) {
+        mGiphyRepository.getRandomSticker(rating).enqueue(new Callback<GiphyResponseObject>() {
+            @Override
+            public void onResponse(Call<GiphyResponseObject> call, Response<GiphyResponseObject> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mRandomSticker.setValue(response.body().getData());
+                } else {
+                    error.setValue(response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GiphyResponseObject> call, Throwable throwable) {
                 error.setValue(throwable.toString());
             }
         });

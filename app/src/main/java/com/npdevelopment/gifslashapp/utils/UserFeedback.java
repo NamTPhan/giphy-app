@@ -3,6 +3,7 @@ package com.npdevelopment.gifslashapp.utils;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.Toast;
 
 public class UserFeedback {
 
@@ -26,5 +27,12 @@ public class UserFeedback {
         mSnackBar.show();
     }
 
+    public void showToastLong(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void showToastShort(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
 
 }

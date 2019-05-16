@@ -1,10 +1,10 @@
 package com.npdevelopment.gifslashapp.views.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +19,6 @@ import com.npdevelopment.gifslashapp.views.ui.MainActivity;
 import java.util.List;
 
 public class TrendingGifsAdapter extends RecyclerView.Adapter<TrendingGifsAdapter.ViewHolder> {
-
-    public static final String GIPHY_ITEM_KEY = "giphyItemKey";
-    public static final int REQUEST_CODE_DISPLAY = 200;
 
     private List<Giphy> giphyList;
     private Context context;
@@ -53,8 +50,8 @@ public class TrendingGifsAdapter extends RecyclerView.Adapter<TrendingGifsAdapte
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DisplayGiphyActivity.class);
-                intent.putExtra(GIPHY_ITEM_KEY, giphy);
-                ((Activity) context).startActivityForResult(intent, REQUEST_CODE_DISPLAY);
+                intent.putExtra(MainActivity.GIPHY_ITEM_KEY, giphy);
+                context.startActivity(intent);
             }
         });
     }

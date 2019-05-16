@@ -1,6 +1,7 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
 import android.app.DownloadManager;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +10,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +27,7 @@ import com.npdevelopment.gifslashapp.utils.NetworkConnection;
 import com.npdevelopment.gifslashapp.utils.Permissions;
 import com.npdevelopment.gifslashapp.utils.UserFeedback;
 import com.npdevelopment.gifslashapp.viewmodels.FavoriteViewModel;
-import com.npdevelopment.gifslashapp.views.adapters.TrendingGifsAdapter;
+import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -39,6 +38,7 @@ import java.util.Date;
 public class DisplayGiphyActivity extends AppCompatActivity {
 
     private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 111;
+    private final String DEFAULT_RATING = "G";
 
     private ImageView mGiphyImage;
     private CardView mSaveFavoriteCard;
@@ -49,9 +49,12 @@ public class DisplayGiphyActivity extends AppCompatActivity {
     private Giphy mGiphyGifSticker;
     private Favorite mFavorite;
     private FavoriteViewModel mFavoriteViewModel;
+    private MainViewModel mMainViewModel;
     private Permissions permissions;
     private NetworkConnection networkConnection;
     private UserFeedback userFeedback;
+
+    private int retrievedCode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,15 +77,41 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
         // Get View Model
         mFavoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
+        // Creating instances of several classes
         permissions = new Permissions(DisplayGiphyActivity.this);
         networkConnection = new NetworkConnection(getApplicationContext());
         userFeedback = new UserFeedback(getApplicationContext());
 
-        mGiphyGifSticker = getIntent().getExtras().getParcelable(TrendingGifsAdapter.GIPHY_ITEM_KEY);
+        retrievedCode = getIntent().getExtras().getInt(MainActivity.GIPHY_CODE_KEY);
 
-        Glide.with(getApplicationContext()).load(mGiphyGifSticker.getImages().getImageFixedHeight().getUrl()).into(mGiphyImage);
-        mTitle.setText(mGiphyGifSticker.getTitle());
+        switch (retrievedCode) {
+            case MainActivity.RANDOM_GIF_CODE:
+                mMainViewModel.getRandomGif(DEFAULT_RATING);
+                mMainViewModel.getOneRandomGif().observe(this, new Observer<Giphy>() {
+                    @Override
+                    public void onChanged(@Nullable Giphy gif) {
+                        mGiphyGifSticker = gif;
+                        setAllData(mGiphyGifSticker);
+                    }
+                });
+                break;
+            case MainActivity.RANDOM_STICKER_CODE:
+                mMainViewModel.getRandomSticker(DEFAULT_RATING);
+                mMainViewModel.getOneRandomSticker().observe(this, new Observer<Giphy>() {
+                    @Override
+                    public void onChanged(@Nullable Giphy sticker) {
+                        mGiphyGifSticker = sticker;
+                        setAllData(mGiphyGifSticker);
+                    }
+                });
+                break;
+            default:
+                mGiphyGifSticker = getIntent().getExtras().getParcelable(MainActivity.GIPHY_ITEM_KEY);
+                setAllData(mGiphyGifSticker);
+                break;
+        }
 
         buttonActions();
     }
@@ -126,6 +155,11 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         Date date = Calendar.getInstance().getTime();
         String currentDate = dateFormat.format(date);
         return currentDate;
+    }
+
+    private void setAllData(Giphy object) {
+        Glide.with(getApplicationContext()).load(object.getImages().getImageFixedHeight().getUrl()).into(mGiphyImage);
+        mTitle.setText(object.getTitle());
     }
 
     private void buttonActions() {

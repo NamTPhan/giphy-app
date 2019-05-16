@@ -30,8 +30,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
                 android:contentDescription="@string/placeholder"
+                android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/placeholder" />
