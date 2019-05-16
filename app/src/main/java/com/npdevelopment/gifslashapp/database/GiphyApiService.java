@@ -28,6 +28,9 @@ public interface GiphyApiService {
     @GET("/v1/stickers/trending?api_key=" + apiKey)
     Call<GiphyResponse> getAllTrendingStickers(@Query("limit") int limit, @Query("rating") String rating);
 
+    @GET("/v1/stickers/random?api_key=" + apiKey)
+    Call<GiphyResponse> getRandomSticker(@Query("rating") String rating);
+
     @GET("/v1/stickers/search?api_key=" + apiKey)
     Call<GiphyResponse> getSelectedCategorySticker(@Query("q") String searchQuery,
                                                @Query("limit") int limit,

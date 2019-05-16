@@ -11,28 +11,29 @@ import android.widget.Spinner;
 
 import com.npdevelopment.gifslashapp.R;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     private final double percentageWidth = 0.8;
     private final double percentageheight = 0.6;
 
-    private TextInputEditText recordLimit;
+    private TextInputEditText recordLimit, searhTerm;
     private Spinner ratingSpinner, languageSpinner;
-    private Button saveBtn;
+    private Button searchBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_search);
 
+        searhTerm = findViewById(R.id.tv_search_query);
         recordLimit = findViewById(R.id.tv_record_limit);
         ratingSpinner = findViewById(R.id.rating_spinner);
         languageSpinner = findViewById(R.id.language_spinner);
-        saveBtn = findViewById(R.id.save_settings_btn);
+        searchBtn = findViewById(R.id.submit_search_btn);
 
         setSizePopupWindow();
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

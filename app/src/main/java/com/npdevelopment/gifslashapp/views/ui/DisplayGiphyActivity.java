@@ -26,6 +26,7 @@ import com.npdevelopment.gifslashapp.models.Favorite;
 import com.npdevelopment.gifslashapp.models.Giphy;
 import com.npdevelopment.gifslashapp.utils.NetworkConnection;
 import com.npdevelopment.gifslashapp.utils.Permissions;
+import com.npdevelopment.gifslashapp.utils.UserFeedback;
 import com.npdevelopment.gifslashapp.viewmodels.FavoriteViewModel;
 import com.npdevelopment.gifslashapp.views.adapters.TrendingGifsAdapter;
 
@@ -44,13 +45,13 @@ public class DisplayGiphyActivity extends AppCompatActivity {
     private ImageButton mFavoriteBtn;
     private Button mDownloadBtn, mShareBtn, mSubmitBtn;
     private TextInputEditText mTitle, mDescription;
-    private Snackbar mSnackBar;
 
     private Giphy mGiphyGifSticker;
     private Favorite mFavorite;
     private FavoriteViewModel mFavoriteViewModel;
     private Permissions permissions;
     private NetworkConnection networkConnection;
+    private UserFeedback userFeedback;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
         permissions = new Permissions(DisplayGiphyActivity.this);
         networkConnection = new NetworkConnection(getApplicationContext());
+        userFeedback = new UserFeedback(getApplicationContext());
 
         mGiphyGifSticker = getIntent().getExtras().getParcelable(TrendingGifsAdapter.GIPHY_ITEM_KEY);
 
@@ -93,9 +95,11 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission was granted, show message
-                    showSnackBar(getString(R.string.permission_granted), R.color.colorAccent);
+                    userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                            getString(R.string.permission_granted), R.color.colorAccent);
                 } else {
-                    showSnackBar(getString(R.string.write_permission_required), R.color.red);
+                    userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                            getString(R.string.write_permission_required), R.color.red);
                 }
                 return;
             }
@@ -124,13 +128,6 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         return currentDate;
     }
 
-    private void showSnackBar(String message, int colorId) {
-        mSnackBar = Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
-        View sbView = mSnackBar.getView();
-        sbView.setBackgroundColor(getResources().getColor(colorId));
-        mSnackBar.show();
-    }
-
     private void buttonActions() {
         mFavoriteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,12 +153,16 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                 if (networkConnection.availableNetworkConnection()) {
                     if (permissions.checkPermissionExternalStorage()) {
                         saveImageToGallery(mGiphyGifSticker.getImages().getImageFixedHeight().getUrl());
-                        showSnackBar(getString(R.string.success_message), R.color.colorAccent);
+
+                        userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                                getString(R.string.success_message), R.color.colorAccent);
                     } else {
-                        showSnackBar(getString(R.string.write_permission_required), R.color.red);
+                        userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                                getString(R.string.write_permission_required), R.color.red);
                     }
                 } else {
-                    showSnackBar(getString(R.string.no_internet_connection), R.color.colorPrimary);
+                    userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                            getString(R.string.no_internet_connection), R.color.colorPrimary);
                 }
             }
         });
@@ -179,7 +180,8 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
                 mFavoriteViewModel.insert(mFavorite);
                 mSaveFavoriteCard.setVisibility(View.GONE);
-                showSnackBar(getResources().getString(R.string.success_message), R.color.colorAccent);
+                userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                        getResources().getString(R.string.success_message), R.color.colorAccent);
             }
         });
     }

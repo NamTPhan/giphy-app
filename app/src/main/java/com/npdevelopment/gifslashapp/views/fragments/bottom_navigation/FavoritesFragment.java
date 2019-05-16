@@ -1,4 +1,4 @@
-package com.npdevelopment.gifslashapp.fragments.bottom_navigation;
+package com.npdevelopment.gifslashapp.views.fragments.bottom_navigation;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Favorite;
 import com.npdevelopment.gifslashapp.viewmodels.FavoriteViewModel;
-import com.npdevelopment.gifslashapp.views.adapters.CategoriesAdapter;
 import com.npdevelopment.gifslashapp.views.adapters.FavoritesAdapter;
 import com.npdevelopment.gifslashapp.views.ui.MainActivity;
 

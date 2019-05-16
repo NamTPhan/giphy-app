@@ -15,21 +15,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.database.GiphyRoomDatabase;
-import com.npdevelopment.gifslashapp.fragments.bottom_navigation.CategoriesFragment;
-import com.npdevelopment.gifslashapp.fragments.bottom_navigation.FavoritesFragment;
-import com.npdevelopment.gifslashapp.fragments.bottom_navigation.TrendingFragment;
+import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.CategoriesFragment;
+import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.FavoritesFragment;
+import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.TrendingFragment;
 import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private Fragment selectedFragment;
-    private FloatingActionButton fabPlus, fabSettings, fabRandom;
+    private FloatingActionButton fabPlus, fabSearch, fabRandomGif, fabRandomSticker;
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAntiClockwise;
+    private TextView labelSearch, labelRandomGif, labelRandomSticker;
 
     private MainViewModel mMainViewModel;
     private GiphyRoomDatabase database;
@@ -46,12 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         fabPlus = findViewById(R.id.fab_plus);
-        fabSettings = findViewById(R.id.fab_settings);
-        fabRandom = findViewById(R.id.fab_random);
+        fabSearch = findViewById(R.id.fab_search);
+        fabRandomGif = findViewById(R.id.fab_random_gif);
+        fabRandomSticker = findViewById(R.id.fab_random_sticker);
         fabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fabRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_clockwise);
         fabRotateAntiClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_anticlockwise);
+        labelSearch = findViewById(R.id.label_search);
+        labelRandomGif = findViewById(R.id.label_random_gif);
+        labelRandomSticker = findViewById(R.id.label_random_sticker);
 
         database = GiphyRoomDatabase.getDatabase(this);
 
@@ -112,38 +118,49 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isOpen) {
-                    fabRandom.startAnimation(fabClose);
-                    fabSettings.startAnimation(fabClose);
                     fabPlus.startAnimation(fabRotateAntiClockwise);
-
-                    fabRandom.setClickable(false);
-                    fabSettings.setClickable(false);
-                    isOpen = false;
+                    fabAnimationVisibilityClickable(fabClose, View.INVISIBLE, false);
                 } else {
-                    fabRandom.startAnimation(fabOpen);
-                    fabSettings.startAnimation(fabOpen);
                     fabPlus.startAnimation(fabRotateClockwise);
-
-                    fabRandom.setClickable(true);
-                    fabSettings.setClickable(true);
-                    isOpen = true;
+                    fabAnimationVisibilityClickable(fabOpen, View.VISIBLE, true);
                 }
             }
         });
 
-        fabSettings.setOnClickListener(new View.OnClickListener() {
+        fabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
             }
         });
 
-        fabRandom.setOnClickListener(new View.OnClickListener() {
+        fabRandomGif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Random", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+        fabRandomSticker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    private void fabAnimationVisibilityClickable(Animation animation, int visible, boolean status) {
+        fabRandomSticker.startAnimation(animation);
+        fabRandomGif.startAnimation(animation);
+        fabSearch.startAnimation(animation);
+        labelSearch.setVisibility(visible);
+        labelRandomGif.setVisibility(visible);
+        labelRandomSticker.setVisibility(visible);
+
+        fabRandomSticker.setClickable(status);
+        fabRandomGif.setClickable(status);
+        fabSearch.setClickable(status);
+        isOpen = status;
     }
 
     /**

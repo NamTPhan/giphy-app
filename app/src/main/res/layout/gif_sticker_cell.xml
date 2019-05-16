@@ -9,6 +9,8 @@
         android:id="@+id/gif_sticker_image"
         android:layout_width="124dp"
         android:layout_height="98dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         app:srcCompat="@drawable/placeholder"
         tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="0dp" />
