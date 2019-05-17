@@ -20,10 +20,10 @@ public interface GiphyApiService {
     Call<GiphyResponseObject> getRandomGif(@Query("rating") String rating);
 
     @GET("/v1/gifs/search?api_key=" + apiKey)
-    Call<GiphyResponseList> getSelectedCategoryGif(@Query("q") String searchQuery,
-                                                   @Query("limit") int limit,
-                                                   @Query("rating") String rating,
-                                                   @Query("lang") String language);
+    Call<GiphyResponseList> searchForGifs(@Query("q") String searchQuery,
+                                          @Query("limit") int limit,
+                                          @Query("rating") String rating,
+                                          @Query("lang") String language);
 
     // Stickers API Calls
     @GET("/v1/stickers/trending?api_key=" + apiKey)
@@ -33,8 +33,8 @@ public interface GiphyApiService {
     Call<GiphyResponseObject> getRandomSticker(@Query("rating") String rating);
 
     @GET("/v1/stickers/search?api_key=" + apiKey)
-    Call<GiphyResponseList> getSelectedCategorySticker(@Query("q") String searchQuery,
-                                                       @Query("limit") int limit,
-                                                       @Query("rating") String rating,
-                                                       @Query("lang") String language);
+    Call<GiphyResponseList> searchForStickers(@Query("q") String searchQuery,
+                                              @Query("limit") int limit,
+                                              @Query("rating") String rating,
+                                              @Query("lang") String language);
 }

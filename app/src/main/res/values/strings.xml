@@ -16,6 +16,7 @@
     <string name="language_label">Language</string>
     <string name="random_gif_label">Random GIF</string>
     <string name="random_sticker_label">Random Sticker</string>
+    <string name="undo_string">UNDO</string>
 
     <string name="sticker_title">STICKERS</string>
     <string name="gif_title">GIFS</string>
@@ -23,6 +24,7 @@
     <string name="save_as_favorite">Save as Favorite</string>
     <string name="record_limit">Total GIFS/Stickers Limit</string>
     <string name="search_term">Search Term</string>
+    <string name="delete_all">Delete All</string>
 
     <string name="fields_required">All fields required!</string>
     <string name="success_message">Successfully saved!</string>
@@ -31,6 +33,9 @@
     <string name="no_internet_connection">No internet connection!</string>
     <string name="connection_failed">Connection failed!</string>
     <string name="check_out_share">Check out this GIF/Sticker!</string>
+    <string name="deleted_message">Item(s) successfully deleted!</string>
+    <string name="update_message">Successfully updated!</string>
+    <string name="restored">Item(s) restored!</string>
 
     <string name="save_to_folder">/GifSlash</string>
 </resources>

@@ -21,7 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.ui.DisplayGiphyActivity" />
+        <activity
+            android:name=".views.ui.DisplayGiphyActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".views.ui.SearchActivity"
             android:theme="@style/AppTheme.SettingsWindowTheme" />
