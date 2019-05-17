@@ -1,5 +1,6 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -10,15 +11,19 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.npdevelopment.gifslashapp.R;
+import com.npdevelopment.gifslashapp.models.SearchData;
 
 public class SearchActivity extends AppCompatActivity {
 
     private final double percentageWidth = 0.8;
     private final double percentageheight = 0.6;
+    public final static String SEARCH_DATA_KEY = "searchDataKey";
 
     private TextInputEditText recordLimit, searhTerm;
     private Spinner ratingSpinner, languageSpinner;
     private Button searchBtn;
+
+    private SearchData mSearchData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,14 @@ public class SearchActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mSearchData = new SearchData(searhTerm.getText().toString(),
+                        Integer.parseInt(recordLimit.getText().toString()),
+                        ratingSpinner.getSelectedItem().toString(),
+                        languageSpinner.getSelectedItem().toString());
 
+                Intent intent = new Intent(SearchActivity.this, DisplaySearchActivity.class);
+                intent.putExtra(SEARCH_DATA_KEY, mSearchData);
+                startActivity(intent);
             }
         });
     }
