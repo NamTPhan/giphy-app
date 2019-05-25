@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         fabRandomGif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDisplayGiphy(RANDOM_GIF_CODE);
+                goToDisplayRandomGifAnimation(RANDOM_GIF_CODE);
             }
         });
 
@@ -155,13 +155,13 @@ public class MainActivity extends AppCompatActivity {
         fabRandomSticker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToDisplayGiphy(RANDOM_STICKER_CODE);
+                goToDisplayRandomGifAnimation(RANDOM_STICKER_CODE);
             }
         });
     }
 
-    private void goToDisplayGiphy(int statusCode) {
-        Intent intent = new Intent(MainActivity.this, DisplayGiphyActivity.class);
+    private void goToDisplayRandomGifAnimation(int statusCode) {
+        Intent intent = new Intent(MainActivity.this, RandomGifAnimationActivity.class);
         intent.putExtra(GIPHY_CODE_KEY, statusCode);
         startActivity(intent);
     }
