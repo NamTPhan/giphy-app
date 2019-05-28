@@ -41,7 +41,7 @@ public class FavoriteViewModel extends AndroidViewModel {
         mFavoriteRepository.delete(favorite);
     }
 
-    public void deleteAllGames(List<Favorite> favorites) {
+    public void deleteAll(List<Favorite> favorites) {
         mFavoriteRepository.deleteAll(favorites);
     }
 }

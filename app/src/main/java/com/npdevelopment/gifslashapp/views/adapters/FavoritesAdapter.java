@@ -2,6 +2,7 @@ package com.npdevelopment.gifslashapp.views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     private List<Favorite> favoriteList;
     private Context context;
+    public FavoriteListener favoriteListener;
 
-    public FavoritesAdapter(Context context, List<Favorite> favoriteList) {
+    public FavoritesAdapter(Context context, List<Favorite> favoriteList, FavoriteListener favoriteListener) {
         this.favoriteList = favoriteList;
         this.context = context;
+        this.favoriteListener = favoriteListener;
     }
 
     @NonNull
@@ -66,13 +69,26 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
         private TextView favoriteTitle, favoriteDescription, favoriteDateSaved;
         private ImageView favoriteImage;
+        private CardView favoriteCard;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            favoriteCard = itemView.findViewById(R.id.favorite_card);
             favoriteImage = itemView.findViewById(R.id.favorite_image);
             favoriteTitle = itemView.findViewById(R.id.favorite_title);
             favoriteDescription = itemView.findViewById(R.id.favorite_description);
             favoriteDateSaved = itemView.findViewById(R.id.favorite_date_saved);
+
+            favoriteCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    favoriteListener.onCardClick(favoriteList.get(getAdapterPosition()));
+                }
+            });
         }
+    }
+
+    public interface FavoriteListener {
+        void onCardClick(Favorite favorite);
     }
 }

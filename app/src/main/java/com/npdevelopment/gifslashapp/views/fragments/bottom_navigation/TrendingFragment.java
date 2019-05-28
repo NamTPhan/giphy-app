@@ -1,4 +1,4 @@
-package com.npdevelopment.gifslashapp.fragments.bottom_navigation;
+package com.npdevelopment.gifslashapp.views.fragments.bottom_navigation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.npdevelopment.gifslashapp.R;
-import com.npdevelopment.gifslashapp.fragments.top_navigation_tabs.TrendingGifFragment;
-import com.npdevelopment.gifslashapp.fragments.top_navigation_tabs.TrendingStickerFragment;
-import com.npdevelopment.gifslashapp.fragments.top_navigation_tabs.ViewPagerAdapter;
+import com.npdevelopment.gifslashapp.views.fragments.top_navigation_tabs.TrendingGifFragment;
+import com.npdevelopment.gifslashapp.views.fragments.top_navigation_tabs.TrendingStickerFragment;
+import com.npdevelopment.gifslashapp.views.fragments.top_navigation_tabs.ViewPagerAdapter;
 
 
 public class TrendingFragment extends Fragment {

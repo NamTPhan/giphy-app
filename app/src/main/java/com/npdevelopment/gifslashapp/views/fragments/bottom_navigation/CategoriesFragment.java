@@ -1,4 +1,4 @@
-package com.npdevelopment.gifslashapp.fragments.bottom_navigation;
+package com.npdevelopment.gifslashapp.views.fragments.bottom_navigation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
