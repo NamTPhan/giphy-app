@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
@@ -30,6 +32,8 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random_gif_animation);
 
+        getSupportActionBar().hide();
+
         logoPartOne = findViewById(R.id.iv_logo_part_one);
         logoPartTwo = findViewById(R.id.iv_logo_part_two);
         logoPartThree = findViewById(R.id.iv_logo_part_three);
@@ -39,6 +43,9 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
         // Get the passed code to determine if its a gif or sticker
         retrievedCode = getIntent().getExtras().getInt(GIPHY_CODE_KEY);
 
+        // G
+        final MediaPlayer sound = MediaPlayer.create(this, R.raw.boxopening);
+
         // Get width of the display
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -47,17 +54,25 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
         // Get width of one of the images
         final int imageWidth = logoPartOne.getDrawable().getIntrinsicWidth();
 
-        // Delay for a few seconds than play move animations
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        moveImageView(logoPartOne, width - (width + imageWidth));
-                        moveImageView(logoPartTwo, width + (imageWidth / 2));
-                        moveImageView(logoPartThree, width - (width + imageWidth));
-                        moveImageView(logoPartFour, width + (imageWidth / 2));
-                    }
-                },
-                1100);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Delay for a few seconds than play move animations
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            sound.start();
+                            moveImageView(logoPartOne, width - (width + imageWidth));
+                            moveImageView(logoPartTwo, width + (imageWidth / 2));
+                            moveImageView(logoPartThree, width - (width + imageWidth));
+                            moveImageView(logoPartFour, width + (imageWidth / 2));
+                        }
+                    },
+                    1100);
+        } else {
+            logoPartOne.setVisibility(View.GONE);
+            logoPartTwo.setVisibility(View.GONE);
+            logoPartThree.setVisibility(View.GONE);
+            logoPartFour.setVisibility(View.GONE);
+        }
 
         // Bounce animation for box
         animatorBounce = ObjectAnimator.ofFloat(questionSquare, "translationY", BOUNCE_DIRECTION);
@@ -88,7 +103,7 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
 
     private void moveImageView(View view, float xPosition) {
         animationSlide = ObjectAnimator.ofFloat(view, "X", xPosition);
-        animationSlide.setDuration(3000);
+        animationSlide.setDuration(2500);
         animationSlide.start();
     }
 }

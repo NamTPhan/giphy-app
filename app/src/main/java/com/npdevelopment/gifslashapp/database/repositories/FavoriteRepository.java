@@ -1,7 +1,6 @@
 package com.npdevelopment.gifslashapp.database.repositories;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.npdevelopment.gifslashapp.database.dao.FavoriteDao;
