@@ -1,8 +1,6 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +11,7 @@ import android.widget.ImageView;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Giphy;
 import com.npdevelopment.gifslashapp.models.SearchData;
-import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
+import com.npdevelopment.gifslashapp.viewmodels.GiphyViewModel;
 import com.npdevelopment.gifslashapp.views.adapters.SearchAdapter;
 
 import java.util.List;
@@ -25,7 +23,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
     private ImageView poweredByGiphy;
     private RecyclerView mRecyclerView;
 
-    private MainViewModel mMainViewModel;
+    private GiphyViewModel mGiphyViewModel;
     private SearchAdapter mSearchAdapter;
     private MainActivity mMainActivity;
     private SearchData mSearchData;
@@ -49,11 +47,11 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
         mSearchData = getIntent().getExtras().getParcelable(SearchActivity.SEARCH_DATA_KEY);
 
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-//        mMainViewModel.getTrendingGiphyGifs(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
+        mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
+//        mGiphyViewModel.getTrendingGiphyGifs(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
 //
 //        // Dynamically update view
-//        mMainViewModel.getAllTrendingGifs().observe(this, new Observer<List<Giphy>>() {
+//        mGiphyViewModel.getAllTrendingGifs().observe(this, new Observer<List<Giphy>>() {
 //            @Override
 //            public void onChanged(@Nullable List<Giphy> gifsStickers) {
 //                mGifsList = gifsStickers;

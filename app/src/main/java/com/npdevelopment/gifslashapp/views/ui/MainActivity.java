@@ -11,7 +11,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,10 +20,10 @@ import android.widget.Toast;
 
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.database.GiphyRoomDatabase;
+import com.npdevelopment.gifslashapp.viewmodels.GiphyViewModel;
 import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.CategoriesFragment;
 import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.FavoritesFragment;
 import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.TrendingFragment;
-import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAntiClockwise;
     private TextView labelSearch, labelRandomGif, labelRandomSticker;
 
-    private MainViewModel mMainViewModel;
+    private GiphyViewModel mGiphyViewModel;
     private GiphyRoomDatabase database;
 
     private boolean isOpen = false;
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         disableActionBarInLandScapeMode();
 
         // Link the correct ViewModel to the activity
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
 
         // Bottom navigation switch
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Show error in toast if api call fails
-        mMainViewModel.getError().observe(this, new Observer<String>() {
+        mGiphyViewModel.getError().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String message) {
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();

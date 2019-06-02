@@ -14,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +28,7 @@ import com.npdevelopment.gifslashapp.utils.NetworkConnection;
 import com.npdevelopment.gifslashapp.utils.Permissions;
 import com.npdevelopment.gifslashapp.utils.UserFeedback;
 import com.npdevelopment.gifslashapp.viewmodels.FavoriteViewModel;
-import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
+import com.npdevelopment.gifslashapp.viewmodels.GiphyViewModel;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -51,7 +50,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
     private Giphy mGiphyGifSticker;
     private Favorite mFavorite;
     private FavoriteViewModel mFavoriteViewModel;
-    private MainViewModel mMainViewModel;
+    private GiphyViewModel mGiphyViewModel;
     private Permissions permissions;
     private NetworkConnection networkConnection;
     private UserFeedback userFeedback;
@@ -81,7 +80,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
         // Get View Model
         mFavoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
 
         // Creating instances of several classes
         permissions = new Permissions(DisplayGiphyActivity.this);
@@ -94,9 +93,9 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         switch (retrievedCode) {
             // Retrieve random GIF from Giphy
             case MainActivity.RANDOM_GIF_CODE:
-                mMainViewModel.getRandomGif(DEFAULT_RATING);
+                mGiphyViewModel.getRandomGif(DEFAULT_RATING);
 
-                mMainViewModel.getOneRandomGif().observe(this, new Observer<Giphy>() {
+                mGiphyViewModel.getOneRandomGif().observe(this, new Observer<Giphy>() {
                     @Override
                     public void onChanged(@Nullable Giphy gif) {
                         mGiphyGifSticker = gif;
@@ -107,9 +106,9 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                 break;
             // Retrieve random sticker from Giphy
             case MainActivity.RANDOM_STICKER_CODE:
-                mMainViewModel.getRandomSticker(DEFAULT_RATING);
+                mGiphyViewModel.getRandomSticker(DEFAULT_RATING);
 
-                mMainViewModel.getOneRandomSticker().observe(this, new Observer<Giphy>() {
+                mGiphyViewModel.getOneRandomSticker().observe(this, new Observer<Giphy>() {
                     @Override
                     public void onChanged(@Nullable Giphy sticker) {
                         mGiphyGifSticker = sticker;

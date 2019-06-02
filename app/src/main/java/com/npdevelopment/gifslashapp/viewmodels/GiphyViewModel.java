@@ -16,7 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainViewModel extends AndroidViewModel {
+public class GiphyViewModel extends AndroidViewModel {
 
     private GiphyRepository mGiphyRepository = new GiphyRepository();
 
@@ -26,7 +26,7 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<Giphy> mRandomGif = new MutableLiveData<>();
     private MutableLiveData<Giphy> mRandomSticker = new MutableLiveData<>();
 
-    public MainViewModel(@NonNull Application application) {
+    public GiphyViewModel(@NonNull Application application) {
         super(application);
     }
 
