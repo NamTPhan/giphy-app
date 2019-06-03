@@ -2,6 +2,7 @@ package com.npdevelopment.gifslashapp.views.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int RANDOM_GIF_CODE = 888;
     public static final int RANDOM_STICKER_CODE = 777;
     public static final int SHOW_FAVORITE_GIPHY = 666;
+    private static Context mContext;
 
     private BottomNavigationView bottomNavigationView;
     private Fragment selectedFragment;
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         labelRandomSticker = findViewById(R.id.label_random_sticker);
 
         database = GiphyRoomDatabase.getDatabase(this);
+        mContext = this;
 
         fabActions();
         disableActionBarInLandScapeMode();
@@ -185,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
      * @param base default column selection
      * @return total columns based on screen size
      */
-    public int calculateNumberOfColumns(int base) {
+    public static int calculateNumberOfColumns(int base) {
         int columns = base;
         String screenSize = getScreenSizeCategory();
 
@@ -201,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             columns += 3;
         }
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             columns = (int) (columns * 1.5);
         }
 
@@ -213,8 +216,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * @return current screen layout
      */
-    private String getScreenSizeCategory() {
-        int screenLayout = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+    private static String getScreenSizeCategory() {
+        int screenLayout = mContext.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
         switch (screenLayout) {
             case Configuration.SCREENLAYOUT_SIZE_SMALL:

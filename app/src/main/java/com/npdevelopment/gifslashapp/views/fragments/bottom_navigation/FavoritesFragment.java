@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -140,7 +139,7 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.Favo
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_giphy_favorite, menu);
+        inflater.inflate(R.menu.menu_trash_can, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

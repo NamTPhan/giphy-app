@@ -7,13 +7,14 @@
 
 
     <android.support.v7.widget.CardView
-        android:id="@+id/favorite_card"
+        android:id="@+id/cell_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
+        app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +25,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/favorite_image"
+                android:id="@+id/card_cell_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="16dp"
@@ -37,7 +38,7 @@
                 app:srcCompat="@drawable/placeholder" />
 
             <TextView
-                android:id="@+id/favorite_title"
+                android:id="@+id/card_cell_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -50,11 +51,11 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/favorite_image"
+                app:layout_constraintStart_toEndOf="@+id/card_cell_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/favorite_description"
+                android:id="@+id/card_cell_description"
                 android:layout_width="0dp"
                 android:layout_height="26dp"
                 android:layout_marginStart="20dp"
@@ -64,11 +65,11 @@
                 android:singleLine="true"
                 android:text="@string/placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/favorite_image"
-                app:layout_constraintTop_toBottomOf="@+id/favorite_title" />
+                app:layout_constraintStart_toEndOf="@+id/card_cell_image"
+                app:layout_constraintTop_toBottomOf="@+id/card_cell_title" />
 
             <TextView
-                android:id="@+id/favorite_date_saved"
+                android:id="@+id/card_cell_date_saved"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="137dp"
@@ -82,7 +83,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/favorite_description" />
+                app:layout_constraintTop_toBottomOf="@+id/card_cell_description" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>

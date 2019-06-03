@@ -7,28 +7,28 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.npdevelopment.gifslashapp.models.Favorite;
+import com.npdevelopment.gifslashapp.models.History;
 
 import java.util.List;
 
 @Dao
-public interface FavoriteDao {
+public interface HistoryDao {
 
     @Insert
-    void insert(Favorite favorite);
+    void insert(History history);
 
     @Insert
-    void insert(List<Favorite> favorites);
+    void insert(List<History> historyList);
 
     @Delete
-    void delete(Favorite favorite);
+    void delete(History history);
 
     @Delete
-    void delete(List<Favorite> favorites);
+    void delete(List<History> historyList);
 
     @Update
-    void update(Favorite favorite);
+    void update(History history);
 
-    @Query("SELECT * from favorites_table")
-    LiveData<List<Favorite>> getAllFavorites();
+    @Query("SELECT * from history_table")
+    LiveData<List<History>> getAllHistory();
 }
