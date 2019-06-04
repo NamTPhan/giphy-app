@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Giphy;
+import com.npdevelopment.gifslashapp.viewmodels.GiphyViewModel;
 import com.npdevelopment.gifslashapp.views.ui.MainActivity;
-import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
 import com.npdevelopment.gifslashapp.views.adapters.TrendingStickersAdapter;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class TrendingStickerFragment extends Fragment {
 
     private View view;
     private ImageView poweredByGiphy;
-    private MainViewModel sharedMainViewModel;
+    private GiphyViewModel sharedGiphyViewModel;
     private RecyclerView mRecyclerView;
     private TrendingStickersAdapter trendingStickersAdapter;
 
@@ -49,6 +49,7 @@ public class TrendingStickerFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(
                 ((MainActivity) getActivity()).calculateNumberOfColumns(ITEMS_EACH_ROW),
                 LinearLayoutManager.VERTICAL);
+
         trendingStickersAdapter = new TrendingStickersAdapter(getContext(), mStickersList);
         mRecyclerView.setAdapter(trendingStickersAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -62,11 +63,11 @@ public class TrendingStickerFragment extends Fragment {
 
         Glide.with(getContext()).load(R.drawable.giphy_horizontal_light).into(poweredByGiphy);
 
-        sharedMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
-        sharedMainViewModel.getTrendingGiphyStickers(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
+        sharedGiphyViewModel = ViewModelProviders.of(getActivity()).get(GiphyViewModel.class);
+        sharedGiphyViewModel.getTrendingGiphyStickers(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
 
         // Dynamically update view
-        sharedMainViewModel.getAllTrendingStickers().observe(this, new Observer<List<Giphy>>() {
+        sharedGiphyViewModel.getAllTrendingStickers().observe(this, new Observer<List<Giphy>>() {
             @Override
             public void onChanged(@Nullable List<Giphy> stickers) {
                 mStickersList = stickers;

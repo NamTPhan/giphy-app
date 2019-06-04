@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Giphy;
+import com.npdevelopment.gifslashapp.viewmodels.GiphyViewModel;
 import com.npdevelopment.gifslashapp.views.ui.MainActivity;
-import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
 import com.npdevelopment.gifslashapp.views.adapters.TrendingGifsAdapter;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class TrendingGifFragment extends Fragment {
 
     private View view;
     private ImageView poweredByGiphy;
-    private MainViewModel sharedMainViewModel;
+    private GiphyViewModel sharedGiphyViewModel;
     private RecyclerView mRecyclerView;
     private TrendingGifsAdapter trendingGifsAdapter;
 
@@ -49,6 +49,7 @@ public class TrendingGifFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(
                 ((MainActivity) getActivity()).calculateNumberOfColumns(ITEMS_EACH_ROW),
                 LinearLayoutManager.VERTICAL);
+
         trendingGifsAdapter = new TrendingGifsAdapter(getContext(), mGifsList);
         mRecyclerView.setAdapter(trendingGifsAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -62,11 +63,11 @@ public class TrendingGifFragment extends Fragment {
 
         Glide.with(getContext()).load(R.drawable.giphy_horizontal_light).into(poweredByGiphy);
 
-        sharedMainViewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
-        sharedMainViewModel.getTrendingGiphyGifs(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
+        sharedGiphyViewModel = ViewModelProviders.of(getActivity()).get(GiphyViewModel.class);
+        sharedGiphyViewModel.getTrendingGiphyGifs(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
 
         // Dynamically update view
-        sharedMainViewModel.getAllTrendingGifs().observe(this, new Observer<List<Giphy>>() {
+        sharedGiphyViewModel.getAllTrendingGifs().observe(this, new Observer<List<Giphy>>() {
             @Override
             public void onChanged(@Nullable List<Giphy> gifs) {
                 mGifsList = gifs;

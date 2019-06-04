@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,11 +25,13 @@ import com.bumptech.glide.Glide;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Favorite;
 import com.npdevelopment.gifslashapp.models.Giphy;
+import com.npdevelopment.gifslashapp.models.History;
 import com.npdevelopment.gifslashapp.utils.NetworkConnection;
 import com.npdevelopment.gifslashapp.utils.Permissions;
 import com.npdevelopment.gifslashapp.utils.UserFeedback;
 import com.npdevelopment.gifslashapp.viewmodels.FavoriteViewModel;
-import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
+import com.npdevelopment.gifslashapp.viewmodels.GiphyViewModel;
+import com.npdevelopment.gifslashapp.viewmodels.HistoryViewModel;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -49,14 +52,16 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
     private Giphy mGiphyGifSticker;
     private Favorite mFavorite;
+    private History mHistory;
     private FavoriteViewModel mFavoriteViewModel;
-    private MainViewModel mMainViewModel;
-    private Permissions permissions;
-    private NetworkConnection networkConnection;
-    private UserFeedback userFeedback;
+    private GiphyViewModel mGiphyViewModel;
+    private HistoryViewModel mHistoryViewModel;
+    private Permissions mPermissions;
+    private NetworkConnection mNetworkConnection;
+    private UserFeedback mUserFeedback;
 
-    private int retrievedCode;
-    private String imageUrl;
+    private int mRetrievedCode;
+    private String mImageUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +72,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.giphy_sticker_title));
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mGiphyImage = findViewById(R.id.displayGiphyImage);
         mSaveFavoriteCard = findViewById(R.id.card_save_favorite);
@@ -79,40 +85,39 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
         // Get View Model
         mFavoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
+        mHistoryViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
 
         // Creating instances of several classes
-        permissions = new Permissions(DisplayGiphyActivity.this);
-        networkConnection = new NetworkConnection(getApplicationContext());
-        userFeedback = new UserFeedback(getApplicationContext());
+        mPermissions = new Permissions(DisplayGiphyActivity.this);
+        mNetworkConnection = new NetworkConnection(getApplicationContext());
+        mUserFeedback = new UserFeedback(getApplicationContext());
 
-        retrievedCode = getIntent().getExtras().getInt(MainActivity.GIPHY_CODE_KEY);
+        mRetrievedCode = getIntent().getExtras().getInt(MainActivity.GIPHY_CODE_KEY);
 
         // Based on retrieved code load the correct data
-        switch (retrievedCode) {
+        switch (mRetrievedCode) {
             // Retrieve random GIF from Giphy
             case MainActivity.RANDOM_GIF_CODE:
-                mMainViewModel.getRandomGif(DEFAULT_RATING);
+                mGiphyViewModel.getRandomGif(DEFAULT_RATING);
 
-                mMainViewModel.getOneRandomGif().observe(this, new Observer<Giphy>() {
+                mGiphyViewModel.getOneRandomGif().observe(this, new Observer<Giphy>() {
                     @Override
                     public void onChanged(@Nullable Giphy gif) {
-                        mGiphyGifSticker = gif;
-                        imageUrl = mGiphyGifSticker.getImages().getImageFixedHeight().getUrl();
-                        setAllDataGiphy(mGiphyGifSticker);
+                        saveRandomGifStickerInHistory(gif);
+                        setAllDataGiphy(gif);
                     }
                 });
                 break;
             // Retrieve random sticker from Giphy
             case MainActivity.RANDOM_STICKER_CODE:
-                mMainViewModel.getRandomSticker(DEFAULT_RATING);
+                mGiphyViewModel.getRandomSticker(DEFAULT_RATING);
 
-                mMainViewModel.getOneRandomSticker().observe(this, new Observer<Giphy>() {
+                mGiphyViewModel.getOneRandomSticker().observe(this, new Observer<Giphy>() {
                     @Override
                     public void onChanged(@Nullable Giphy sticker) {
-                        mGiphyGifSticker = sticker;
-                        imageUrl = mGiphyGifSticker.getImages().getImageFixedHeight().getUrl();
-                        setAllDataGiphy(mGiphyGifSticker);
+                        saveRandomGifStickerInHistory(sticker);
+                        setAllDataGiphy(sticker);
                     }
                 });
                 break;
@@ -122,13 +127,16 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
                 mSubmitBtn.setText(getString(R.string.save_button));
                 mSaveFavoriteCard.setVisibility(View.VISIBLE);
-                imageUrl = mFavorite.getImageUrl();
                 setAllDataFavorite(mFavorite);
+                break;
+            // Retrieve History GIF/Sticker from the passed object
+            case MainActivity.SHOW_HISTORY_CARD:
+                mHistory = getIntent().getExtras().getParcelable(MainActivity.GIPHY_ITEM_KEY);
+                setAllDataHistory(mHistory);
                 break;
             // Default load the object that was passed
             default:
                 mGiphyGifSticker = getIntent().getExtras().getParcelable(MainActivity.GIPHY_ITEM_KEY);
-                imageUrl = mGiphyGifSticker.getImages().getImageFixedHeight().getUrl();
                 setAllDataGiphy(mGiphyGifSticker);
                 break;
         }
@@ -139,8 +147,9 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
     /**
      * Listen to the callback of device requests
-     * @param requestCode that is defined as constants
-     * @param permissions the permission what it is all about
+     *
+     * @param requestCode  that is defined as constants
+     * @param permissions  the permission what it is all about
      * @param grantResults
      */
     @Override
@@ -151,10 +160,10 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission was granted, show message
-                    userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                    mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
                             getString(R.string.permission_granted), R.color.colorAccent);
                 } else {
-                    userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                    mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
                             getString(R.string.write_permission_required), R.color.red);
                 }
                 return;
@@ -164,6 +173,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
     /**
      * Icons defined in the toolbar
+     *
      * @param item the menu item
      * @return a boolean
      */
@@ -191,18 +201,50 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
     /**
      * Set all data of the Giphy object
+     *
      * @param object Giphy object that is passed by the activity
      */
     private void setAllDataGiphy(Giphy object) {
+        // Save image url in variable to use for download and share
+        mImageUrl = object.getImages().getImageFixedHeight().getUrl();
+
         Glide.with(getApplicationContext()).load(object.getImages().getImageFixedHeight().getUrl()).into(mGiphyImage);
         mTitle.setText(object.getTitle());
     }
 
+    private void saveRandomGifStickerInHistory(Giphy object) {
+        History newHistoryObject = new History(
+                object.getTitle(),
+                null,
+                getCurrentDate(),
+                object.getImages().getImageFixedHeight().getUrl());
+
+        mHistoryViewModel.insert(newHistoryObject);
+    }
+
     /**
      * Set all data of the Favorite object
+     *
      * @param object Favorite object that is passed by the activity
      */
     private void setAllDataFavorite(Favorite object) {
+        // Save image url in variable to use for download and share
+        mImageUrl = object.getImageUrl();
+
+        Glide.with(getApplicationContext()).load(object.getImageUrl()).into(mGiphyImage);
+        mTitle.setText(object.getTitle());
+        mDescription.setText(object.getDescription());
+    }
+
+    /**
+     * Set all data of the History object
+     *
+     * @param object History object that is passed by the activity
+     */
+    private void setAllDataHistory(History object) {
+        // Save image url in variable to use for download and share
+        mImageUrl = object.getImageUrl();
+
         Glide.with(getApplicationContext()).load(object.getImageUrl()).into(mGiphyImage);
         mTitle.setText(object.getTitle());
         mDescription.setText(object.getDescription());
@@ -225,26 +267,26 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.check_out_share));
-                intent.putExtra(Intent.EXTRA_TEXT, imageUrl);
-                startActivity(intent);
+                intent.putExtra(Intent.EXTRA_TEXT, mImageUrl);
+                startActivity(Intent.createChooser(intent, getString(R.string.share)));
             }
         });
 
         mDownloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (networkConnection.availableNetworkConnection()) {
-                    if (permissions.checkPermissionExternalStorage()) {
-                        saveImageToGallery(imageUrl);
+                if (mNetworkConnection.availableNetworkConnection()) {
+                    if (mPermissions.checkPermissionExternalStorage()) {
+                        saveImageToGallery(mImageUrl);
 
-                        userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                        mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
                                 getString(R.string.success_message), R.color.colorAccent);
                     } else {
-                        userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                        mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
                                 getString(R.string.write_permission_required), R.color.red);
                     }
                 } else {
-                    userFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                    mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
                             getString(R.string.no_internet_connection), R.color.colorPrimary);
                 }
             }
@@ -254,7 +296,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Set all data in favorite object
-                if (retrievedCode == MainActivity.SHOW_FAVORITE_GIPHY) {
+                if (mRetrievedCode == MainActivity.SHOW_FAVORITE_GIPHY) {
                     mFavorite.setTitle(mTitle.getText().toString());
                     mFavorite.setDescription(mDescription.getText().toString());
                     mFavorite.setDateSaved(getCurrentDate());
@@ -267,19 +309,20 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                             mTitle.getText().toString(),
                             mDescription.getText().toString(),
                             getCurrentDate(),
-                            imageUrl);
+                            mImageUrl);
 
                     mFavoriteViewModel.insert(mFavorite);
                 }
 
                 mSaveFavoriteCard.setVisibility(View.GONE);
-                userFeedback.showToastLong(getString(R.string.success_message));
+                mUserFeedback.showToastLong(getString(R.string.success_message));
             }
         });
     }
 
     /**
      * Function to download the GIFS
+     *
      * @param url the download url
      */
     private void saveImageToGallery(String url) {

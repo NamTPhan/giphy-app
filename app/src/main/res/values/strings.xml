@@ -21,6 +21,7 @@
     <string name="sticker_title">STICKERS</string>
     <string name="gif_title">GIFS</string>
     <string name="giphy_sticker_title">GIF/Sticker</string>
+    <string name="giphy_random_history_title">History Of Random GIFS</string>
     <string name="save_as_favorite">Save as Favorite</string>
     <string name="record_limit">Total GIFS/Stickers Limit</string>
     <string name="search_term">Search Term</string>

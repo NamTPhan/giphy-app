@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
@@ -20,24 +22,29 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
 
     private final int BOUNCE_DIRECTION = -100;
 
-    private ImageView logoPartOne, logoPartTwo, logoPartThree, logoPartFour, questionSquare;
-    private ObjectAnimator animatorBounce, animationSlide;
+    private ImageView mLogoPartOne, mLogoPartTwo, mLogoPartThree, mLogoPartFour, mQuestionSquare;
+    private ObjectAnimator mAnimatorBounce, mAnimationSlide;
 
-    private int retrievedCode;
+    private int mRetrievedCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random_gif_animation);
 
-        logoPartOne = findViewById(R.id.iv_logo_part_one);
-        logoPartTwo = findViewById(R.id.iv_logo_part_two);
-        logoPartThree = findViewById(R.id.iv_logo_part_three);
-        logoPartFour = findViewById(R.id.iv_logo_part_four);
-        questionSquare = findViewById(R.id.iv_question_square);
+        getSupportActionBar().hide();
+
+        mLogoPartOne = findViewById(R.id.iv_logo_part_one);
+        mLogoPartTwo = findViewById(R.id.iv_logo_part_two);
+        mLogoPartThree = findViewById(R.id.iv_logo_part_three);
+        mLogoPartFour = findViewById(R.id.iv_logo_part_four);
+        mQuestionSquare = findViewById(R.id.iv_question_square);
 
         // Get the passed code to determine if its a gif or sticker
-        retrievedCode = getIntent().getExtras().getInt(GIPHY_CODE_KEY);
+        mRetrievedCode = getIntent().getExtras().getInt(GIPHY_CODE_KEY);
+
+        // Get box opening sound from resources
+        final MediaPlayer sound = MediaPlayer.create(this, R.raw.boxopening);
 
         // Get width of the display
         Display display = getWindowManager().getDefaultDisplay();
@@ -45,41 +52,49 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
         display.getSize(size);
         final int width = size.x;
         // Get width of one of the images
-        final int imageWidth = logoPartOne.getDrawable().getIntrinsicWidth();
+        final int imageWidth = mLogoPartOne.getDrawable().getIntrinsicWidth();
 
-        // Delay for a few seconds than play move animations
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        moveImageView(logoPartOne, width - (width + imageWidth));
-                        moveImageView(logoPartTwo, width + (imageWidth / 2));
-                        moveImageView(logoPartThree, width - (width + imageWidth));
-                        moveImageView(logoPartFour, width + (imageWidth / 2));
-                    }
-                },
-                1100);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Delay for a few seconds than play move animations
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            sound.start();
+                            moveImageView(mLogoPartOne, width - (width + imageWidth));
+                            moveImageView(mLogoPartTwo, width + (imageWidth / 2));
+                            moveImageView(mLogoPartThree, width - (width + imageWidth));
+                            moveImageView(mLogoPartFour, width + (imageWidth / 2));
+                        }
+                    },
+                    1100);
+        } else {
+            mLogoPartOne.setVisibility(View.GONE);
+            mLogoPartTwo.setVisibility(View.GONE);
+            mLogoPartThree.setVisibility(View.GONE);
+            mLogoPartFour.setVisibility(View.GONE);
+        }
 
         // Bounce animation for box
-        animatorBounce = ObjectAnimator.ofFloat(questionSquare, "translationY", BOUNCE_DIRECTION);
-        animatorBounce.setInterpolator(new BounceInterpolator());
-        animatorBounce.setStartDelay(500);
-        animatorBounce.setDuration(1500);
-        animatorBounce.start();
+        mAnimatorBounce = ObjectAnimator.ofFloat(mQuestionSquare, "translationY", BOUNCE_DIRECTION);
+        mAnimatorBounce.setInterpolator(new BounceInterpolator());
+        mAnimatorBounce.setStartDelay(500);
+        mAnimatorBounce.setDuration(1500);
+        mAnimatorBounce.start();
 
         // Loops bounce animation
-        animatorBounce.addListener(new AnimatorListenerAdapter() {
+        mAnimatorBounce.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                animatorBounce.start();
+                mAnimatorBounce.start();
             }
         });
 
-        questionSquare.setOnClickListener(new View.OnClickListener() {
+        mQuestionSquare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RandomGifAnimationActivity.this, DisplayGiphyActivity.class);
-                intent.putExtra(GIPHY_CODE_KEY, retrievedCode);
+                intent.putExtra(GIPHY_CODE_KEY, mRetrievedCode);
                 startActivity(intent);
                 finish();
             }
@@ -87,8 +102,8 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
     }
 
     private void moveImageView(View view, float xPosition) {
-        animationSlide = ObjectAnimator.ofFloat(view, "X", xPosition);
-        animationSlide.setDuration(3000);
-        animationSlide.start();
+        mAnimationSlide = ObjectAnimator.ofFloat(view, "X", xPosition);
+        mAnimationSlide.setDuration(2500);
+        mAnimationSlide.start();
     }
 }

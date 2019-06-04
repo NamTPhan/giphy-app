@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -64,6 +63,7 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.Favo
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(
                 ((MainActivity) getActivity()).calculateNumberOfColumns(ITEMS_EACH_ROW),
                 LinearLayoutManager.VERTICAL);
+
         mFavoritesAdapter = new FavoritesAdapter(getContext(), mFavoriteList, this);
         mRecyclerView.setAdapter(mFavoritesAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -86,9 +86,7 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.Favo
             }
         });
 
-        /*
-           Recognize swipe gesture of the user
-        */
+        // Recognize swipe gesture of the user
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -97,10 +95,10 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.Favo
                         return false;
                     }
 
-                    //Called when a user swipes left or right on a ViewHolder
+                    // Called when a user swipes left or right on a ViewHolder
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        //Get the index corresponding to the selected position
+                        // Get the index corresponding to the selected position
                         int position = (viewHolder.getAdapterPosition());
 
                         mFavorite = mFavoriteList.get(position);
@@ -140,7 +138,7 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.Favo
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu_giphy_favorite, menu);
+        inflater.inflate(R.menu.menu_trash_can, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

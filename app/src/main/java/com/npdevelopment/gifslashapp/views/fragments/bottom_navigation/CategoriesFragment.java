@@ -35,6 +35,7 @@ public class CategoriesFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(
                 ((MainActivity) getActivity()).calculateNumberOfColumns(ITEMS_EACH_ROW),
                 LinearLayoutManager.VERTICAL);
+
         mCategoriesAdapter = new CategoriesAdapter(getContext(),
                 Arrays.asList(getResources().getStringArray(R.array.giphyCategories)));
         mRecyclerView.setAdapter(mCategoriesAdapter);

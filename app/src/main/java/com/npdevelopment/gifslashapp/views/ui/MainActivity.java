@@ -2,6 +2,7 @@ package com.npdevelopment.gifslashapp.views.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
@@ -11,7 +12,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,10 +21,10 @@ import android.widget.Toast;
 
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.database.GiphyRoomDatabase;
+import com.npdevelopment.gifslashapp.viewmodels.GiphyViewModel;
 import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.CategoriesFragment;
 import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.FavoritesFragment;
 import com.npdevelopment.gifslashapp.views.fragments.bottom_navigation.TrendingFragment;
-import com.npdevelopment.gifslashapp.viewmodels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int RANDOM_GIF_CODE = 888;
     public static final int RANDOM_STICKER_CODE = 777;
     public static final int SHOW_FAVORITE_GIPHY = 666;
+    public static final int SHOW_HISTORY_CARD = 555;
+    private static Context sContext;
 
     private BottomNavigationView bottomNavigationView;
     private Fragment selectedFragment;
@@ -40,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private Animation fabOpen, fabClose, fabRotateClockwise, fabRotateAntiClockwise;
     private TextView labelSearch, labelRandomGif, labelRandomSticker;
 
-    private MainViewModel mMainViewModel;
-    private GiphyRoomDatabase database;
+    private GiphyViewModel mGiphyViewModel;
+    private GiphyRoomDatabase mDatabase;
 
     private boolean isOpen = false;
 
@@ -66,13 +68,14 @@ public class MainActivity extends AppCompatActivity {
         labelRandomGif = findViewById(R.id.label_random_gif);
         labelRandomSticker = findViewById(R.id.label_random_sticker);
 
-        database = GiphyRoomDatabase.getDatabase(this);
+        mDatabase = GiphyRoomDatabase.getDatabase(this);
+        sContext = this;
 
         fabActions();
         disableActionBarInLandScapeMode();
 
         // Link the correct ViewModel to the activity
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
 
         // Bottom navigation switch
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Show error in toast if api call fails
-        mMainViewModel.getError().observe(this, new Observer<String>() {
+        mGiphyViewModel.getError().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String message) {
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Go to display giphy activity and retrieve random gif
+        // Go to display Giphy activity and retrieve random gif
         fabRandomGif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Go to display giphy activity and retrieve random sticker
+        // Go to display Giphy activity and retrieve random sticker
         fabRandomSticker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
      * @param base default column selection
      * @return total columns based on screen size
      */
-    public int calculateNumberOfColumns(int base) {
+    public static int calculateNumberOfColumns(int base) {
         int columns = base;
         String screenSize = getScreenSizeCategory();
 
@@ -202,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
             columns += 3;
         }
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (sContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             columns = (int) (columns * 1.5);
         }
 
@@ -214,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
      *
      * @return current screen layout
      */
-    private String getScreenSizeCategory() {
-        int screenLayout = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+    private static String getScreenSizeCategory() {
+        int screenLayout = sContext.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
         switch (screenLayout) {
             case Configuration.SCREENLAYOUT_SIZE_SMALL:

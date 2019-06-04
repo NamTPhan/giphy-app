@@ -3,72 +3,72 @@ package com.npdevelopment.gifslashapp.database.repositories;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 
-import com.npdevelopment.gifslashapp.database.dao.FavoriteDao;
 import com.npdevelopment.gifslashapp.database.GiphyRoomDatabase;
-import com.npdevelopment.gifslashapp.models.Favorite;
+import com.npdevelopment.gifslashapp.database.dao.HistoryDao;
+import com.npdevelopment.gifslashapp.models.History;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class FavoriteRepository {
+public class HistoryRepository {
 
     private GiphyRoomDatabase mGiphyRoomDatabase;
-    private FavoriteDao mFavoriteDao;
-    private LiveData<List<Favorite>> mFavorites;
+    private HistoryDao mHistoryDao;
+    private LiveData<List<History>> mHistory;
     private Executor mExecutor = Executors.newSingleThreadExecutor();
 
-    public FavoriteRepository(Context context) {
+    public HistoryRepository(Context context) {
         mGiphyRoomDatabase = GiphyRoomDatabase.getDatabase(context);
-        mFavoriteDao = mGiphyRoomDatabase.favoriteDao();
-        mFavorites = mFavoriteDao.getAllFavorites();
+        mHistoryDao = mGiphyRoomDatabase.historyDao();
+        mHistory = mHistoryDao.getAllHistory();
     }
 
-    public LiveData<List<Favorite>> getFavorites() {
-        return mFavorites;
+    public LiveData<List<History>> getHistory() {
+        return mHistory;
     }
 
-    public void insert(final Favorite favorite) {
+    public void insert(final History historyGifSticker) {
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                mFavoriteDao.insert(favorite);
+                mHistoryDao.insert(historyGifSticker);
             }
         });
     }
 
-    public void insertAll(final List<Favorite> favorites) {
+    public void insertAll(final List<History> historyList) {
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                mFavoriteDao.insert(favorites);
+                mHistoryDao.insert(historyList);
             }
         });
     }
 
-    public void update(final Favorite favorite) {
+    public void update(final History historyGifSticker) {
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                mFavoriteDao.update(favorite);
+                mHistoryDao.update(historyGifSticker);
             }
         });
     }
 
-    public void delete(final Favorite favorite) {
+    public void delete(final History historyGifSticker) {
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                mFavoriteDao.delete(favorite);
+                mHistoryDao.delete(historyGifSticker);
             }
         });
     }
 
-    public void deleteAll(final List<Favorite> favorites) {
+    public void deleteAll(final List<History> historyList) {
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                mFavoriteDao.delete(favorites);
+                mHistoryDao.delete(historyList);
             }
         });
     }

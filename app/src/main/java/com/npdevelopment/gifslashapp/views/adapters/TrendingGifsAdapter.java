@@ -45,8 +45,8 @@ public class TrendingGifsAdapter extends RecyclerView.Adapter<TrendingGifsAdapte
             Glide.with(context).load(giphy.getImages().getImageFixedHeight().getUrl()).into(viewHolder.gifSticker);
         }
 
-        // On click send object to display giphy activity
-        viewHolder.gifSticker.setOnClickListener(new View.OnClickListener(){
+        // On click send object to display Giphy activity
+        viewHolder.gifSticker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DisplayGiphyActivity.class);

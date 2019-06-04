@@ -1,6 +1,5 @@
 package com.npdevelopment.gifslashapp.models;
 
-import android.arch.persistence.room.Ignore;
 import android.os.Parcel;
 import android.os.Parcelable;
 

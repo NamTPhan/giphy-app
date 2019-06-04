@@ -32,7 +32,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.favorite_cell, viewGroup, false);
+        View view = inflater.inflate(R.layout.giphy_card_cell, viewGroup, false);
         return new FavoritesAdapter.ViewHolder(view);
     }
 
@@ -73,11 +73,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            favoriteCard = itemView.findViewById(R.id.favorite_card);
-            favoriteImage = itemView.findViewById(R.id.favorite_image);
-            favoriteTitle = itemView.findViewById(R.id.favorite_title);
-            favoriteDescription = itemView.findViewById(R.id.favorite_description);
-            favoriteDateSaved = itemView.findViewById(R.id.favorite_date_saved);
+            favoriteCard = itemView.findViewById(R.id.cell_card);
+            favoriteImage = itemView.findViewById(R.id.card_cell_image);
+            favoriteTitle = itemView.findViewById(R.id.card_cell_title);
+            favoriteDescription = itemView.findViewById(R.id.card_cell_description);
+            favoriteDateSaved = itemView.findViewById(R.id.card_cell_date_saved);
 
             favoriteCard.setOnClickListener(new View.OnClickListener() {
                 @Override
