@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +52,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
 
     private Giphy mGiphyGifSticker;
     private Favorite mFavorite;
+    private History mHistory;
     private FavoriteViewModel mFavoriteViewModel;
     private GiphyViewModel mGiphyViewModel;
     private HistoryViewModel mHistoryViewModel;
@@ -126,6 +128,11 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                 mSubmitBtn.setText(getString(R.string.save_button));
                 mSaveFavoriteCard.setVisibility(View.VISIBLE);
                 setAllDataFavorite(mFavorite);
+                break;
+            // Retrieve History GIF/Sticker from the passed object
+            case MainActivity.SHOW_HISTORY_CARD:
+                mHistory = getIntent().getExtras().getParcelable(MainActivity.GIPHY_ITEM_KEY);
+                setAllDataHistory(mHistory);
                 break;
             // Default load the object that was passed
             default:
@@ -221,6 +228,20 @@ public class DisplayGiphyActivity extends AppCompatActivity {
      * @param object Favorite object that is passed by the activity
      */
     private void setAllDataFavorite(Favorite object) {
+        // Save image url in variable to use for download and share
+        mImageUrl = object.getImageUrl();
+
+        Glide.with(getApplicationContext()).load(object.getImageUrl()).into(mGiphyImage);
+        mTitle.setText(object.getTitle());
+        mDescription.setText(object.getDescription());
+    }
+
+    /**
+     * Set all data of the History object
+     *
+     * @param object History object that is passed by the activity
+     */
+    private void setAllDataHistory(History object) {
         // Save image url in variable to use for download and share
         mImageUrl = object.getImageUrl();
 

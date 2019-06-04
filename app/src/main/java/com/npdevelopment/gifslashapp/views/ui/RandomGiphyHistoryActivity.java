@@ -11,11 +11,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.npdevelopment.gifslashapp.R;
+import com.npdevelopment.gifslashapp.models.Favorite;
 import com.npdevelopment.gifslashapp.models.History;
 import com.npdevelopment.gifslashapp.utils.UserFeedback;
 import com.npdevelopment.gifslashapp.viewmodels.HistoryViewModel;
@@ -159,11 +161,11 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
 
     @Override
     public void onCardClick(History historyGifSticker) {
-        Intent intent = new Intent(this, DisplayGiphyActivity.class);
+        Intent intent = new Intent(getApplicationContext(), DisplayGiphyActivity.class);
         // Send request code of edit status
-        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.SHOW_FAVORITE_GIPHY);
+        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.SHOW_HISTORY_CARD);
         // Send the object that has to be edited
-        intent.putExtra(MainActivity.GIPHY_ITEM_KEY, mHistoryGifSticker);
+        intent.putExtra(MainActivity.GIPHY_ITEM_KEY, historyGifSticker);
         startActivity(intent);
     }
 }

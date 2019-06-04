@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int RANDOM_GIF_CODE = 888;
     public static final int RANDOM_STICKER_CODE = 777;
     public static final int SHOW_FAVORITE_GIPHY = 666;
+    public static final int SHOW_HISTORY_CARD = 555;
     private static Context sContext;
 
     private BottomNavigationView bottomNavigationView;
