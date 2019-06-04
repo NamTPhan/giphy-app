@@ -11,21 +11,21 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class HistoryRespository {
+public class HistoryRepository {
 
     private GiphyRoomDatabase mGiphyRoomDatabase;
     private HistoryDao mHistoryDao;
     private LiveData<List<History>> mHistory;
     private Executor mExecutor = Executors.newSingleThreadExecutor();
 
-    public HistoryRespository(Context context) {
+    public HistoryRepository(Context context) {
         mGiphyRoomDatabase = GiphyRoomDatabase.getDatabase(context);
         mHistoryDao = mGiphyRoomDatabase.historyDao();
         mHistory = mHistoryDao.getAllHistory();
     }
 
     public LiveData<List<History>> getHistory() {
-        return  mHistory;
+        return mHistory;
     }
 
     public void insert(final History historyGifSticker) {

@@ -20,7 +20,7 @@ public class GiphyViewModel extends AndroidViewModel {
 
     private GiphyRepository mGiphyRepository = new GiphyRepository();
 
-    private MutableLiveData<String> error = new MutableLiveData<>();
+    private MutableLiveData<String> mError = new MutableLiveData<>();
     private MutableLiveData<List<Giphy>> mTrendingGifs = new MutableLiveData<>();
     private MutableLiveData<List<Giphy>> mTrendingStickers = new MutableLiveData<>();
     private MutableLiveData<Giphy> mRandomGif = new MutableLiveData<>();
@@ -31,7 +31,7 @@ public class GiphyViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getError() {
-        return error;
+        return mError;
     }
 
     public MutableLiveData<List<Giphy>> getAllTrendingGifs() {
@@ -57,13 +57,13 @@ public class GiphyViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mTrendingGifs.setValue(response.body().getData());
                 } else {
-                    error.setValue(response.toString());
+                    mError.setValue("Retrieving data failed!");
                 }
             }
 
             @Override
             public void onFailure(Call<GiphyResponseList> call, Throwable throwable) {
-                error.setValue(throwable.toString());
+                mError.setValue("Retrieving data failed!");
             }
         });
     }
@@ -75,13 +75,13 @@ public class GiphyViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mTrendingStickers.setValue(response.body().getData());
                 } else {
-                    error.setValue(response.toString());
+                    mError.setValue("Retrieving data failed!");
                 }
             }
 
             @Override
             public void onFailure(Call<GiphyResponseList> call, Throwable throwable) {
-                error.setValue(throwable.toString());
+                mError.setValue("Retrieving data failed!");
             }
         });
     }
@@ -93,13 +93,13 @@ public class GiphyViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mRandomGif.setValue(response.body().getData());
                 } else {
-                    error.setValue(response.toString());
+                    mError.setValue("Retrieving data failed!");
                 }
             }
 
             @Override
             public void onFailure(Call<GiphyResponseObject> call, Throwable throwable) {
-                error.setValue(throwable.toString());
+                mError.setValue("Retrieving data failed!");
             }
         });
     }
@@ -111,13 +111,13 @@ public class GiphyViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     mRandomSticker.setValue(response.body().getData());
                 } else {
-                    error.setValue(response.toString());
+                    mError.setValue("Retrieving data failed!");
                 }
             }
 
             @Override
             public void onFailure(Call<GiphyResponseObject> call, Throwable throwable) {
-                error.setValue(throwable.toString());
+                mError.setValue("Retrieving data failed!");
             }
         });
     }

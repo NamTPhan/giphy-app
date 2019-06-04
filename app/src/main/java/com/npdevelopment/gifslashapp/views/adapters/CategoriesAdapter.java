@@ -13,12 +13,12 @@ import com.npdevelopment.gifslashapp.R;
 
 import java.util.List;
 
-public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder>  {
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
 
     private List<String> categories;
     private Context context;
 
-    public CategoriesAdapter( Context context, List<String> categories) {
+    public CategoriesAdapter(Context context, List<String> categories) {
         this.categories = categories;
         this.context = context;
     }

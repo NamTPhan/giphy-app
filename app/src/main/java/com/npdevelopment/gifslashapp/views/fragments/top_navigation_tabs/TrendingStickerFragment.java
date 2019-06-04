@@ -49,6 +49,7 @@ public class TrendingStickerFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(
                 ((MainActivity) getActivity()).calculateNumberOfColumns(ITEMS_EACH_ROW),
                 LinearLayoutManager.VERTICAL);
+
         trendingStickersAdapter = new TrendingStickersAdapter(getContext(), mStickersList);
         mRecyclerView.setAdapter(trendingStickersAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);

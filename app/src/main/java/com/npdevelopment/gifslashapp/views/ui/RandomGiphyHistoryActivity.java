@@ -36,7 +36,7 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
     private History mHistoryGifSticker;
     private UserFeedback mUserFeedback;
 
-    private List<History> mHistoryList, tempHistoryList;
+    private List<History> mHistoryList, mTempHistoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(
                 mainActivity.calculateNumberOfColumns(ITEMS_EACH_ROW),
                 LinearLayoutManager.VERTICAL);
+
         mHistoryAdapter = new HistoryAdapter(this, mHistoryList, this);
         mRecyclerView.setAdapter(mHistoryAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -72,9 +73,7 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
             }
         });
 
-        /*
-           Recognize swipe gesture of the user
-        */
+        // Recognize swipe gesture of the user
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -83,17 +82,17 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
                         return false;
                     }
 
-                    //Called when a user swipes left or right on a ViewHolder
+                    // Called when a user swipes left or right on a ViewHolder
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        //Get the index corresponding to the selected position
+                        // Get the index corresponding to the selected position
                         int position = (viewHolder.getAdapterPosition());
 
                         mHistoryGifSticker = mHistoryList.get(position);
                         mHistoryViewModel.delete(mHistoryList.get(position));
                         mHistoryAdapter.notifyItemRemoved(position);
 
-                        // Give the user the chance to restore the favorite
+                        // Give the user the chance to restore the deleted history card
                         mSnackBar = Snackbar.make(findViewById(R.id.rv_history), "Deleted: " +
                                 mHistoryList.get(position).getTitle(), Snackbar.LENGTH_LONG).setAction(R.string.undo_string,
                                 new View.OnClickListener() {
@@ -128,9 +127,6 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if (item.getItemId() == android.R.id.home) {
@@ -140,7 +136,7 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
         // Delete all history
         if (id == R.id.action_delete_item) {
             // Save the history items list in a temporary list for restoring the data
-            tempHistoryList = mHistoryList;
+            mTempHistoryList = mHistoryList;
             mHistoryViewModel.deleteAll(mHistoryList);
 
             mSnackBar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.deleted_message),
@@ -150,7 +146,7 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
                         @Override
                         public void onClick(View v) {
                             mUserFeedback.showToastLong(getString(R.string.restored));
-                            mHistoryViewModel.insertAll(tempHistoryList);
+                            mHistoryViewModel.insertAll(mTempHistoryList);
                             mHistoryAdapter.refreshList(mHistoryList);
                         }
                     });

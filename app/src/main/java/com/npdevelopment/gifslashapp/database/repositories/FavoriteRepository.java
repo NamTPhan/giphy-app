@@ -25,7 +25,7 @@ public class FavoriteRepository {
     }
 
     public LiveData<List<Favorite>> getFavorites() {
-        return  mFavorites;
+        return mFavorites;
     }
 
     public void insert(final Favorite favorite) {

@@ -20,7 +20,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
     private final int ITEMS_EACH_ROW = 3;
 
-    private ImageView poweredByGiphy;
+    private ImageView mPoweredByGiphy;
     private RecyclerView mRecyclerView;
 
     private GiphyViewModel mGiphyViewModel;
@@ -35,7 +35,7 @@ public class DisplaySearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_search);
 
-        poweredByGiphy = findViewById(R.id.powereByGiphy);
+        mPoweredByGiphy = findViewById(R.id.powereByGiphy);
         mRecyclerView = findViewById(R.id.rv_trending_gifs);
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(

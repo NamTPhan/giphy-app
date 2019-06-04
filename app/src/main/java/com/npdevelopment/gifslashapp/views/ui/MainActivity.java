@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int RANDOM_GIF_CODE = 888;
     public static final int RANDOM_STICKER_CODE = 777;
     public static final int SHOW_FAVORITE_GIPHY = 666;
-    private static Context mContext;
+    private static Context sContext;
 
     private BottomNavigationView bottomNavigationView;
     private Fragment selectedFragment;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView labelSearch, labelRandomGif, labelRandomSticker;
 
     private GiphyViewModel mGiphyViewModel;
-    private GiphyRoomDatabase database;
+    private GiphyRoomDatabase mDatabase;
 
     private boolean isOpen = false;
 
@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         labelRandomGif = findViewById(R.id.label_random_gif);
         labelRandomSticker = findViewById(R.id.label_random_sticker);
 
-        database = GiphyRoomDatabase.getDatabase(this);
-        mContext = this;
+        mDatabase = GiphyRoomDatabase.getDatabase(this);
+        sContext = this;
 
         fabActions();
         disableActionBarInLandScapeMode();
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Go to display giphy activity and retrieve random gif
+        // Go to display Giphy activity and retrieve random gif
         fabRandomGif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Go to display giphy activity and retrieve random sticker
+        // Go to display Giphy activity and retrieve random sticker
         fabRandomSticker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             columns += 3;
         }
 
-        if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (sContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             columns = (int) (columns * 1.5);
         }
 
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
      * @return current screen layout
      */
     private static String getScreenSizeCategory() {
-        int screenLayout = mContext.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+        int screenLayout = sContext.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
         switch (screenLayout) {
             case Configuration.SCREENLAYOUT_SIZE_SMALL:

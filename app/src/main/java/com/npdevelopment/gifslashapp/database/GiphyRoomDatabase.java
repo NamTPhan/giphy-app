@@ -17,6 +17,7 @@ public abstract class GiphyRoomDatabase extends RoomDatabase {
     private static volatile GiphyRoomDatabase INSTANCE;
 
     public abstract FavoriteDao favoriteDao();
+
     public abstract HistoryDao historyDao();
 
     public static GiphyRoomDatabase getDatabase(final Context context) {

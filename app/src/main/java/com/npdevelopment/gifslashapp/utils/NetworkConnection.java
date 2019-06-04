@@ -6,17 +6,17 @@ import android.net.NetworkInfo;
 
 public class NetworkConnection {
 
-    private Context context;
+    private Context mContext;
 
     public NetworkConnection(Context context) {
-        this.context = context;
+        this.mContext = context;
     }
 
     public boolean availableNetworkConnection() {
         boolean wifiConnection = false;
         boolean mobileNetworkConnection = false;
 
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo[] netInfo = cm.getAllNetworkInfo();
         for (NetworkInfo networkInfo : netInfo) {
             if (networkInfo.getTypeName().equalsIgnoreCase("WIFI"))

@@ -49,6 +49,7 @@ public class TrendingGifFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(
                 ((MainActivity) getActivity()).calculateNumberOfColumns(ITEMS_EACH_ROW),
                 LinearLayoutManager.VERTICAL);
+
         trendingGifsAdapter = new TrendingGifsAdapter(getContext(), mGifsList);
         mRecyclerView.setAdapter(trendingGifsAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);

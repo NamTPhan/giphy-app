@@ -15,13 +15,13 @@ import com.npdevelopment.gifslashapp.models.SearchData;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private final double percentageWidth = 0.8;
-    private final double percentageheight = 0.6;
+    private final double mPercentageWidth = 0.8;
+    private final double mPercentageheight = 0.6;
     public final static String SEARCH_DATA_KEY = "searchDataKey";
 
-    private TextInputEditText recordLimit, searhTerm;
-    private Spinner ratingSpinner, languageSpinner;
-    private Button searchBtn;
+    private TextInputEditText mRecordLimit, mSearhTerm;
+    private Spinner mRatingSpinner, mLanguageSpinner;
+    private Button mSearchBtn;
 
     private SearchData mSearchData;
 
@@ -30,21 +30,21 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        searhTerm = findViewById(R.id.tv_search_query);
-        recordLimit = findViewById(R.id.tv_record_limit);
-        ratingSpinner = findViewById(R.id.rating_spinner);
-        languageSpinner = findViewById(R.id.language_spinner);
-        searchBtn = findViewById(R.id.submit_search_btn);
+        mSearhTerm = findViewById(R.id.tv_search_query);
+        mRecordLimit = findViewById(R.id.tv_record_limit);
+        mRatingSpinner = findViewById(R.id.rating_spinner);
+        mLanguageSpinner = findViewById(R.id.language_spinner);
+        mSearchBtn = findViewById(R.id.submit_search_btn);
 
         setSizePopupWindow();
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSearchData = new SearchData(searhTerm.getText().toString(),
-                        Integer.parseInt(recordLimit.getText().toString()),
-                        ratingSpinner.getSelectedItem().toString(),
-                        languageSpinner.getSelectedItem().toString());
+                mSearchData = new SearchData(mSearhTerm.getText().toString(),
+                        Integer.parseInt(mRecordLimit.getText().toString()),
+                        mRatingSpinner.getSelectedItem().toString(),
+                        mLanguageSpinner.getSelectedItem().toString());
 
                 Intent intent = new Intent(SearchActivity.this, DisplaySearchActivity.class);
                 intent.putExtra(SEARCH_DATA_KEY, mSearchData);
@@ -64,9 +64,9 @@ public class SearchActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getWindow().setLayout((int) (width * percentageWidth), height);
+            getWindow().setLayout((int) (width * mPercentageWidth), height);
         } else {
-            getWindow().setLayout((int) (width * percentageWidth), (int) (height * percentageheight));
+            getWindow().setLayout((int) (width * mPercentageWidth), (int) (height * mPercentageheight));
         }
     }
 }
