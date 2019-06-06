@@ -26,4 +26,12 @@ public class GiphyRepository {
     public Call<GiphyResponseObject> getRandomSticker(String rating) {
         return giphyApiService.getRandomSticker(rating);
     }
+
+    public Call<GiphyResponseList> getSearchGif(String searchQuery, int limit, String rating, String language) {
+        return giphyApiService.searchForGifs(searchQuery, limit, rating, language);
+    }
+
+    public Call<GiphyResponseList> getSearchSticker(String searchQuery, int limit, String rating, String language) {
+        return giphyApiService.searchForStickers(searchQuery, limit, rating, language);
+    }
 }

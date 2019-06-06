@@ -21,8 +21,12 @@ public class GiphyViewModel extends AndroidViewModel {
     private GiphyRepository mGiphyRepository = new GiphyRepository();
 
     private MutableLiveData<String> mError = new MutableLiveData<>();
+
     private MutableLiveData<List<Giphy>> mTrendingGifs = new MutableLiveData<>();
     private MutableLiveData<List<Giphy>> mTrendingStickers = new MutableLiveData<>();
+    private MutableLiveData<List<Giphy>> mSearchListGifs = new MutableLiveData<>();
+    private MutableLiveData<List<Giphy>> mSearchListStickers = new MutableLiveData<>();
+
     private MutableLiveData<Giphy> mRandomGif = new MutableLiveData<>();
     private MutableLiveData<Giphy> mRandomSticker = new MutableLiveData<>();
 
@@ -48,6 +52,14 @@ public class GiphyViewModel extends AndroidViewModel {
 
     public MutableLiveData<Giphy> getOneRandomSticker() {
         return mRandomSticker;
+    }
+
+    public MutableLiveData<List<Giphy>> getAllSearchedGifs() {
+        return mSearchListGifs;
+    }
+
+    public MutableLiveData<List<Giphy>> getAllSearchedStickers() {
+        return mSearchListStickers;
     }
 
     public void getTrendingGiphyGifs(int limit, String rating) {
@@ -117,6 +129,42 @@ public class GiphyViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(Call<GiphyResponseObject> call, Throwable throwable) {
+                mError.setValue("Retrieving data failed!");
+            }
+        });
+    }
+
+    public void getGifsBasedOnSearchQuery(String searchQuery, int limit, String rating, String language) {
+        mGiphyRepository.getSearchGif(searchQuery, limit, rating, language).enqueue(new Callback<GiphyResponseList>() {
+            @Override
+            public void onResponse(Call<GiphyResponseList> call, Response<GiphyResponseList> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mSearchListGifs.setValue(response.body().getData());
+                } else {
+                    mError.setValue("Retrieving data failed!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GiphyResponseList> call, Throwable throwable) {
+                mError.setValue("Retrieving data failed!");
+            }
+        });
+    }
+
+    public void getStickersBasedOnSearchQuery(String searchQuery, int limit, String rating, String language) {
+        mGiphyRepository.getSearchSticker(searchQuery, limit, rating, language).enqueue(new Callback<GiphyResponseList>() {
+            @Override
+            public void onResponse(Call<GiphyResponseList> call, Response<GiphyResponseList> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mSearchListStickers.setValue(response.body().getData());
+                } else {
+                    mError.setValue("Retrieving data failed!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GiphyResponseList> call, Throwable throwable) {
                 mError.setValue("Retrieving data failed!");
             }
         });

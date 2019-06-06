@@ -37,6 +37,7 @@
     <string name="deleted_message">Item(s) successfully deleted!</string>
     <string name="update_message">Successfully updated!</string>
     <string name="restored">Item(s) restored!</string>
+    <string name="checkbox_failed">Checkbox selection required!</string>
 
     <string name="save_to_folder">/GifSlash</string>
 </resources>
