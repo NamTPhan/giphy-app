@@ -129,7 +129,7 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.Favo
     public void onCardClick(Favorite favorite) {
         Intent intent = new Intent(getActivity(), DisplayGiphyActivity.class);
         // Send request code of edit status
-        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.SHOW_FAVORITE_GIPHY);
+        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.SHOW_FAVORITE_GIPHY_CODE);
         // Send the object that has to be edited
         intent.putExtra(MainActivity.GIPHY_ITEM_KEY, favorite);
         startActivity(intent);

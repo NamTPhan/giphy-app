@@ -17,10 +17,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     private List<String> categories;
     private Context context;
+    private CategoryListener categoryListener;
 
-    public CategoriesAdapter(Context context, List<String> categories) {
+    public CategoriesAdapter(Context context, List<String> categories, CategoryListener categoryListener) {
         this.categories = categories;
         this.context = context;
+        this.categoryListener = categoryListener;
     }
 
     @NonNull
@@ -37,13 +39,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         final String category = categories.get(position);
 
         viewHolder.categoryName.setText(category);
-
-        viewHolder.categoryName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("@@@", category);
-            }
-        });
     }
 
     @Override
@@ -58,6 +53,17 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryName = itemView.findViewById(R.id.category_text);
+
+            categoryName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    categoryListener.onCardClick(categories.get(getAdapterPosition()));
+                }
+            });
         }
+    }
+
+    public interface CategoryListener {
+        void onCardClick(String category);
     }
 }

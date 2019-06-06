@@ -163,7 +163,7 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
     public void onCardClick(History historyGifSticker) {
         Intent intent = new Intent(getApplicationContext(), DisplayGiphyActivity.class);
         // Send request code of edit status
-        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.SHOW_HISTORY_CARD);
+        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.SHOW_HISTORY_CARD_CODE);
         // Send the object that has to be edited
         intent.putExtra(MainActivity.GIPHY_ITEM_KEY, historyGifSticker);
         startActivity(intent);

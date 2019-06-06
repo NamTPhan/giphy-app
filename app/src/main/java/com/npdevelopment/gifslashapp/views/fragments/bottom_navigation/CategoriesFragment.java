@@ -1,5 +1,6 @@
 package com.npdevelopment.gifslashapp.views.fragments.bottom_navigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.npdevelopment.gifslashapp.R;
+import com.npdevelopment.gifslashapp.views.ui.DisplayGiphyActivity;
+import com.npdevelopment.gifslashapp.views.ui.DisplaySearchActivity;
 import com.npdevelopment.gifslashapp.views.ui.MainActivity;
 import com.npdevelopment.gifslashapp.views.adapters.CategoriesAdapter;
 
 import java.util.Arrays;
 
-public class CategoriesFragment extends Fragment {
+public class CategoriesFragment extends Fragment implements CategoriesAdapter.CategoryListener {
 
     private final int ITEMS_EACH_ROW = 2;
 
@@ -37,11 +40,21 @@ public class CategoriesFragment extends Fragment {
                 LinearLayoutManager.VERTICAL);
 
         mCategoriesAdapter = new CategoriesAdapter(getContext(),
-                Arrays.asList(getResources().getStringArray(R.array.giphyCategories)));
+                Arrays.asList(getResources().getStringArray(R.array.giphyCategories)), this);
         mRecyclerView.setAdapter(mCategoriesAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         return view;
+    }
+
+    @Override
+    public void onCardClick(String category) {
+        Intent intent = new Intent(getActivity(), DisplaySearchActivity.class);
+        // Send request code of edit status
+        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.CATEGORY_SEARCH_CODE);
+        // Send category name
+        intent.putExtra(MainActivity.GIPHY_ITEM_KEY, category);
+        startActivity(intent);
     }
 
     @Override

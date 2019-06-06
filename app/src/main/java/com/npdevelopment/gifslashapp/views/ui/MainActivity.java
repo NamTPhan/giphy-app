@@ -32,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String GIPHY_CODE_KEY = "giphyRandomItemKey";
     public static final int RANDOM_GIF_CODE = 888;
     public static final int RANDOM_STICKER_CODE = 777;
-    public static final int SHOW_FAVORITE_GIPHY = 666;
-    public static final int SHOW_HISTORY_CARD = 555;
+    public static final int SHOW_FAVORITE_GIPHY_CODE = 666;
+    public static final int SHOW_HISTORY_CARD_CODE = 555;
+    public static final int CATEGORY_SEARCH_CODE = 444;
+    public static final int DEFAULT_SEARCH_CODE = 333;
     private static Context sContext;
 
     private BottomNavigationView bottomNavigationView;

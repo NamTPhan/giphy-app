@@ -42,7 +42,7 @@ import java.util.Date;
 public class DisplayGiphyActivity extends AppCompatActivity {
 
     private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 111;
-    private final String DEFAULT_RATING = "G";
+    private final String DEFAULT_RATING = "PG-13";
 
     private ImageView mGiphyImage;
     private CardView mSaveFavoriteCard;
@@ -122,7 +122,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                 });
                 break;
             // Retrieve favorite GIF/Sticker from the passed object
-            case MainActivity.SHOW_FAVORITE_GIPHY:
+            case MainActivity.SHOW_FAVORITE_GIPHY_CODE:
                 mFavorite = getIntent().getExtras().getParcelable(MainActivity.GIPHY_ITEM_KEY);
 
                 mSubmitBtn.setText(getString(R.string.save_button));
@@ -130,7 +130,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
                 setAllDataFavorite(mFavorite);
                 break;
             // Retrieve History GIF/Sticker from the passed object
-            case MainActivity.SHOW_HISTORY_CARD:
+            case MainActivity.SHOW_HISTORY_CARD_CODE:
                 mHistory = getIntent().getExtras().getParcelable(MainActivity.GIPHY_ITEM_KEY);
                 setAllDataHistory(mHistory);
                 break;
@@ -296,7 +296,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Set all data in favorite object
-                if (mRetrievedCode == MainActivity.SHOW_FAVORITE_GIPHY) {
+                if (mRetrievedCode == MainActivity.SHOW_FAVORITE_GIPHY_CODE) {
                     mFavorite.setTitle(mTitle.getText().toString());
                     mFavorite.setDescription(mDescription.getText().toString());
                     mFavorite.setDateSaved(getCurrentDate());

@@ -83,6 +83,7 @@ public class SearchActivity extends AppCompatActivity {
                         Intent intent = new Intent(SearchActivity.this, DisplaySearchActivity.class);
                         intent.putExtra(SEARCH_DATA_KEY, mSearchData);
                         intent.putExtra(CHECKBOX_SELECTION, checkBoxSelection);
+                        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.DEFAULT_SEARCH_CODE);
                         startActivity(intent);
                     } else {
                         mUserFeedback.showToastShort(getString(R.string.checkbox_failed));
