@@ -44,7 +44,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
     private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 111;
     private final String DEFAULT_RATING = "PG-13";
 
-    private ImageView mGiphyImage;
+    private ImageView mGiphyImage, mPoweredByGiphy;
     private CardView mSaveFavoriteCard;
     private ImageButton mFavoriteBtn;
     private Button mDownloadBtn, mShareBtn, mSubmitBtn;
@@ -75,6 +75,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mGiphyImage = findViewById(R.id.displayGiphyImage);
+        mPoweredByGiphy = findViewById(R.id.poweredByGiphy);
         mSaveFavoriteCard = findViewById(R.id.card_save_favorite);
         mDownloadBtn = findViewById(R.id.download_btn);
         mShareBtn = findViewById(R.id.share_btn);
@@ -82,6 +83,9 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         mSubmitBtn = findViewById(R.id.submitBtn);
         mTitle = findViewById(R.id.title_favorite);
         mDescription = findViewById(R.id.description_favorite);
+
+        // Load powered by Giphy gif on top
+        Glide.with(this).load(R.drawable.giphy_horizontal_light).into(mPoweredByGiphy);
 
         // Get View Model
         mFavoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
@@ -258,6 +262,7 @@ public class DisplayGiphyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mSaveFavoriteCard.setVisibility(View.VISIBLE);
+                mPoweredByGiphy.setVisibility(View.GONE);
             }
         });
 

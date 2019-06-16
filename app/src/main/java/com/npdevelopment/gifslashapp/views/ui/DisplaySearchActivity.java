@@ -25,7 +25,7 @@ import java.util.List;
 public class DisplaySearchActivity extends AppCompatActivity {
 
     private final int ITEMS_EACH_ROW = 3;
-    private final int DEFAULT_RECORD_LIMIT = 200;
+    private final int DEFAULT_RECORD_LIMIT = 500;
     private final String DEFAULT_RATING = "PG-13";
     private final String DEFAULT_LANGUAGE = "en";
 
