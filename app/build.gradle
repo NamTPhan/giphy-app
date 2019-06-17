@@ -18,7 +18,11 @@ android {
             resValue 'string', "api_key", GiphyApiKey
         }
         release {
-            minifyEnabled false
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources true
+
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "API_KEY", GiphyApiKey
             resValue 'string', "api_key", GiphyApiKey
