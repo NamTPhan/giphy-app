@@ -6,16 +6,16 @@ android {
         applicationId "com.npdevelopment.gifslashapp"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', "API_KEY", GiphyApiKey
-            resValue 'string', "api_key", GiphyApiKey
+            buildConfigField 'String', "GIPHY_API_KEY", GIPHY_API_KEY
+            resValue 'string', "giphy_api_key", GIPHY_API_KEY
         }
         release {
             // Enables resource shrinking, which is performed by the
@@ -24,8 +24,8 @@ android {
 
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', "API_KEY", GiphyApiKey
-            resValue 'string', "api_key", GiphyApiKey
+            buildConfigField 'String', "GIPHY_API_KEY", GIPHY_API_KEY
+            resValue 'string', "giphy_api_key", GIPHY_API_KEY
         }
     }
 }

@@ -4,12 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
@@ -22,8 +19,8 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
 
     private final int BOUNCE_DIRECTION = -100;
 
-    private ImageView mLogoPartOne, mLogoPartTwo, mLogoPartThree, mLogoPartFour, mQuestionSquare;
-    private ObjectAnimator mAnimatorBounce, mAnimationSlide;
+    private ImageView mQuestionSquare;
+    private ObjectAnimator mAnimatorBounce;
 
     private int mRetrievedCode;
 
@@ -34,10 +31,6 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        mLogoPartOne = findViewById(R.id.iv_logo_part_one);
-        mLogoPartTwo = findViewById(R.id.iv_logo_part_two);
-        mLogoPartThree = findViewById(R.id.iv_logo_part_three);
-        mLogoPartFour = findViewById(R.id.iv_logo_part_four);
         mQuestionSquare = findViewById(R.id.iv_question_square);
 
         // Get the passed code to determine if its a gif or sticker
@@ -46,33 +39,15 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
         // Get box opening sound from resources
         final MediaPlayer sound = MediaPlayer.create(this, R.raw.boxopening);
 
-        // Get width of the display
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        final int width = size.x;
-        // Get width of one of the images
-        final int imageWidth = mLogoPartOne.getDrawable().getIntrinsicWidth();
+        // Delay for a few seconds than play move animations
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        sound.start();
+                    }
+                },
+                600);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // Delay for a few seconds than play move animations
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            sound.start();
-                            moveImageView(mLogoPartOne, width - (width + imageWidth));
-                            moveImageView(mLogoPartTwo, width + (imageWidth / 2));
-                            moveImageView(mLogoPartThree, width - (width + imageWidth));
-                            moveImageView(mLogoPartFour, width + (imageWidth / 2));
-                        }
-                    },
-                    1100);
-        } else {
-            mLogoPartOne.setVisibility(View.GONE);
-            mLogoPartTwo.setVisibility(View.GONE);
-            mLogoPartThree.setVisibility(View.GONE);
-            mLogoPartFour.setVisibility(View.GONE);
-        }
 
         // Bounce animation for box
         mAnimatorBounce = ObjectAnimator.ofFloat(mQuestionSquare, "translationY", BOUNCE_DIRECTION);
@@ -99,11 +74,5 @@ public class RandomGifAnimationActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    private void moveImageView(View view, float xPosition) {
-        mAnimationSlide = ObjectAnimator.ofFloat(view, "X", xPosition);
-        mAnimationSlide.setDuration(2500);
-        mAnimationSlide.start();
     }
 }

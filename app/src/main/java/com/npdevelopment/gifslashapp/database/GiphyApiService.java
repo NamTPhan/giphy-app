@@ -10,7 +10,7 @@ import retrofit2.http.Query;
 
 public interface GiphyApiService {
 
-    String apiKey = BuildConfig.API_KEY;
+    String apiKey = BuildConfig.GIPHY_API_KEY;
 
     // GIF API Calls
     @GET("/v1/gifs/trending?api_key=" + apiKey)
