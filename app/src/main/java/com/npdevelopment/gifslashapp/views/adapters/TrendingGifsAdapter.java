@@ -46,13 +46,10 @@ public class TrendingGifsAdapter extends RecyclerView.Adapter<TrendingGifsAdapte
         }
 
         // On click send object to display Giphy activity
-        viewHolder.gifSticker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, DisplayGiphyActivity.class);
-                intent.putExtra(MainActivity.GIPHY_ITEM_KEY, giphy);
-                context.startActivity(intent);
-            }
+        viewHolder.gifSticker.setOnClickListener(view -> {
+            Intent intent = new Intent(context, DisplayGiphyActivity.class);
+            intent.putExtra(MainActivity.GIPHY_ITEM_KEY, giphy);
+            context.startActivity(intent);
         });
     }
 

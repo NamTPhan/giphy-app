@@ -78,12 +78,9 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.Favo
         mFavoriteViewModel = ViewModelProviders.of(getActivity()).get(FavoriteViewModel.class);
 
         // Dynamically update view
-        mFavoriteViewModel.getFavorites().observe(this, new Observer<List<Favorite>>() {
-            @Override
-            public void onChanged(@Nullable List<Favorite> favorites) {
-                mFavoriteList = favorites;
-                mFavoritesAdapter.refreshList(favorites);
-            }
+        mFavoriteViewModel.getFavorites().observe(this, favorites -> {
+            mFavoriteList = favorites;
+            mFavoritesAdapter.refreshList(favorites);
         });
 
         // Recognize swipe gesture of the user
@@ -108,14 +105,10 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.Favo
                         // Give the user the chance to restore the favorite
                         mSnackBar = Snackbar.make(getView(), "Deleted: " +
                                 mFavoriteList.get(position).getTitle(), Snackbar.LENGTH_LONG).setAction(R.string.undo_string,
-                                new View.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(View v) {
-                                        mUserFeedback.showToastShort(getString(R.string.restored));
-                                        mFavoriteViewModel.insert(mFavorite);
-                                        mFavoritesAdapter.refreshList(mFavoriteList);
-                                    }
+                                v -> {
+                                    mUserFeedback.showToastShort(getString(R.string.restored));
+                                    mFavoriteViewModel.insert(mFavorite);
+                                    mFavoritesAdapter.refreshList(mFavoriteList);
                                 });
                         mSnackBar.show();
                     }

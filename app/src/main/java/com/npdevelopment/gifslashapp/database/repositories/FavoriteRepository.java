@@ -29,47 +29,22 @@ public class FavoriteRepository {
     }
 
     public void insert(final Favorite favorite) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mFavoriteDao.insert(favorite);
-            }
-        });
+        mExecutor.execute(() -> mFavoriteDao.insert(favorite));
     }
 
     public void insertAll(final List<Favorite> favorites) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mFavoriteDao.insert(favorites);
-            }
-        });
+        mExecutor.execute(() -> mFavoriteDao.insert(favorites));
     }
 
     public void update(final Favorite favorite) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mFavoriteDao.update(favorite);
-            }
-        });
+        mExecutor.execute(() -> mFavoriteDao.update(favorite));
     }
 
     public void delete(final Favorite favorite) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mFavoriteDao.delete(favorite);
-            }
-        });
+        mExecutor.execute(() -> mFavoriteDao.delete(favorite));
     }
 
     public void deleteAll(final List<Favorite> favorites) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mFavoriteDao.delete(favorites);
-            }
-        });
+        mExecutor.execute(() -> mFavoriteDao.delete(favorites));
     }
 }

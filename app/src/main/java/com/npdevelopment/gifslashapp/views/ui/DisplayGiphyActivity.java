@@ -1,7 +1,6 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
 import android.app.DownloadManager;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -105,24 +103,18 @@ public class DisplayGiphyActivity extends AppCompatActivity {
             case MainActivity.RANDOM_GIF_CODE:
                 mGiphyViewModel.getRandomGif(DEFAULT_RATING);
 
-                mGiphyViewModel.getOneRandomGif().observe(this, new Observer<Giphy>() {
-                    @Override
-                    public void onChanged(@Nullable Giphy gif) {
-                        saveRandomGifStickerInHistory(gif);
-                        setAllDataGiphy(gif);
-                    }
+                mGiphyViewModel.getOneRandomGif().observe(this, gif -> {
+                    saveRandomGifStickerInHistory(gif);
+                    setAllDataGiphy(gif);
                 });
                 break;
             // Retrieve random sticker from Giphy
             case MainActivity.RANDOM_STICKER_CODE:
                 mGiphyViewModel.getRandomSticker(DEFAULT_RATING);
 
-                mGiphyViewModel.getOneRandomSticker().observe(this, new Observer<Giphy>() {
-                    @Override
-                    public void onChanged(@Nullable Giphy sticker) {
-                        saveRandomGifStickerInHistory(sticker);
-                        setAllDataGiphy(sticker);
-                    }
+                mGiphyViewModel.getOneRandomSticker().observe(this, sticker -> {
+                    saveRandomGifStickerInHistory(sticker);
+                    setAllDataGiphy(sticker);
                 });
                 break;
             // Retrieve favorite GIF/Sticker from the passed object
@@ -258,70 +250,58 @@ public class DisplayGiphyActivity extends AppCompatActivity {
      * Set all actions of the buttons
      */
     private void buttonActions() {
-        mFavoriteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSaveFavoriteCard.setVisibility(View.VISIBLE);
-                mPoweredByGiphy.setVisibility(View.GONE);
-            }
+        mFavoriteBtn.setOnClickListener(v -> {
+            mSaveFavoriteCard.setVisibility(View.VISIBLE);
+            mPoweredByGiphy.setVisibility(View.GONE);
         });
 
-        mShareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.check_out_share));
-                intent.putExtra(Intent.EXTRA_TEXT, mImageUrl);
-                startActivity(Intent.createChooser(intent, getString(R.string.share)));
-            }
+        mShareBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.check_out_share));
+            intent.putExtra(Intent.EXTRA_TEXT, mImageUrl);
+            startActivity(Intent.createChooser(intent, getString(R.string.share)));
         });
 
-        mDownloadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mNetworkConnection.availableNetworkConnection()) {
-                    if (mPermissions.checkPermissionExternalStorage()) {
-                        saveImageToGallery(mImageUrl);
+        mDownloadBtn.setOnClickListener(v -> {
+            if (mNetworkConnection.availableNetworkConnection()) {
+                if (mPermissions.checkPermissionExternalStorage()) {
+                    saveImageToGallery(mImageUrl);
 
-                        mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
-                                getString(R.string.success_message), R.color.colorAccent);
-                    } else {
-                        mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
-                                getString(R.string.write_permission_required), R.color.red);
-                    }
+                    mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                            getString(R.string.success_message), R.color.colorAccent);
                 } else {
                     mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
-                            getString(R.string.no_internet_connection), R.color.colorPrimary);
+                            getString(R.string.write_permission_required), R.color.red);
                 }
+            } else {
+                mUserFeedback.showSnackBarLong(getWindow().getDecorView().getRootView(),
+                        getString(R.string.no_internet_connection), R.color.colorPrimary);
             }
         });
 
-        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Set all data in favorite object
-                if (mRetrievedCode == MainActivity.SHOW_FAVORITE_GIPHY_CODE) {
-                    mFavorite.setTitle(mTitle.getText().toString());
-                    mFavorite.setDescription(mDescription.getText().toString());
-                    mFavorite.setDateSaved(getCurrentDate());
-                    mFavorite.setImageUrl(mFavorite.getImageUrl());
+        mSubmitBtn.setOnClickListener(v -> {
+            // Set all data in favorite object
+            if (mRetrievedCode == MainActivity.SHOW_FAVORITE_GIPHY_CODE) {
+                mFavorite.setTitle(mTitle.getText().toString());
+                mFavorite.setDescription(mDescription.getText().toString());
+                mFavorite.setDateSaved(getCurrentDate());
+                mFavorite.setImageUrl(mFavorite.getImageUrl());
 
-                    mFavoriteViewModel.update(mFavorite);
-                    finish();
-                } else {
-                    mFavorite = new Favorite(
-                            mTitle.getText().toString(),
-                            mDescription.getText().toString(),
-                            getCurrentDate(),
-                            mImageUrl);
+                mFavoriteViewModel.update(mFavorite);
+                finish();
+            } else {
+                mFavorite = new Favorite(
+                        mTitle.getText().toString(),
+                        mDescription.getText().toString(),
+                        getCurrentDate(),
+                        mImageUrl);
 
-                    mFavoriteViewModel.insert(mFavorite);
-                }
-
-                mSaveFavoriteCard.setVisibility(View.GONE);
-                mUserFeedback.showToastLong(getString(R.string.success_message));
+                mFavoriteViewModel.insert(mFavorite);
             }
+
+            mSaveFavoriteCard.setVisibility(View.GONE);
+            mUserFeedback.showToastLong(getString(R.string.success_message));
         });
     }
 

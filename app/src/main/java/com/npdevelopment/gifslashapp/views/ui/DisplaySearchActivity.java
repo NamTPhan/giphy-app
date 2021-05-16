@@ -1,14 +1,11 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
@@ -90,12 +87,9 @@ public class DisplaySearchActivity extends AppCompatActivity {
 
                 mGiphyViewModel.getGifsBasedOnSearchQuery(mCategorySearchQuery, DEFAULT_RECORD_LIMIT,
                         DEFAULT_RATING, DEFAULT_LANGUAGE);
-                mGiphyViewModel.getAllSearchedGifs().observe(this, new Observer<List<Giphy>>() {
-                    @Override
-                    public void onChanged(@Nullable List<Giphy> gifs) {
-                        mGifsStickersList = gifs;
-                        mSearchAdapter.refreshList(mGifsStickersList);
-                    }
+                mGiphyViewModel.getAllSearchedGifs().observe(this, gifs -> {
+                    mGifsStickersList = gifs;
+                    mSearchAdapter.refreshList(mGifsStickersList);
                 });
                 break;
             default:
@@ -122,24 +116,18 @@ public class DisplaySearchActivity extends AppCompatActivity {
     private void getGifsFromApi() {
         mGiphyViewModel.getGifsBasedOnSearchQuery(mSearchData.getSearchQuery(), mSearchData.getRecordLimit(),
                 mSearchData.getRating(), mSearchData.getLanguage());
-        mGiphyViewModel.getAllSearchedGifs().observe(this, new Observer<List<Giphy>>() {
-            @Override
-            public void onChanged(@Nullable List<Giphy> gifs) {
-                mGifsStickersList = gifs;
-                mSearchAdapter.refreshList(mGifsStickersList);
-            }
+        mGiphyViewModel.getAllSearchedGifs().observe(this, gifs -> {
+            mGifsStickersList = gifs;
+            mSearchAdapter.refreshList(mGifsStickersList);
         });
     }
 
     private void getStickersFromApi() {
         mGiphyViewModel.getStickersBasedOnSearchQuery(mSearchData.getSearchQuery(), mSearchData.getRecordLimit(),
                 mSearchData.getRating(), mSearchData.getLanguage());
-        mGiphyViewModel.getAllSearchedStickers().observe(this, new Observer<List<Giphy>>() {
-            @Override
-            public void onChanged(@Nullable List<Giphy> stickers) {
-                mGifsStickersList = stickers;
-                mSearchAdapter.refreshList(mGifsStickersList);
-            }
+        mGiphyViewModel.getAllSearchedStickers().observe(this, stickers -> {
+            mGifsStickersList = stickers;
+            mSearchAdapter.refreshList(mGifsStickersList);
         });
     }
 }

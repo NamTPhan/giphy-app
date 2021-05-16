@@ -3,7 +3,6 @@ package com.npdevelopment.gifslashapp.views.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +53,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             super(itemView);
             categoryName = itemView.findViewById(R.id.category_text);
 
-            categoryName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    categoryListener.onCardClick(categories.get(getAdapterPosition()));
-                }
-            });
+            categoryName.setOnClickListener(v -> categoryListener.onCardClick(categories.get(getAdapterPosition())));
         }
     }
 

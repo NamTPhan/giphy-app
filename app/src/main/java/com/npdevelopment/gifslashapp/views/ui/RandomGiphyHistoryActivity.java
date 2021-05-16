@@ -1,9 +1,7 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,13 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.npdevelopment.gifslashapp.R;
-import com.npdevelopment.gifslashapp.models.Favorite;
 import com.npdevelopment.gifslashapp.models.History;
 import com.npdevelopment.gifslashapp.utils.UserFeedback;
 import com.npdevelopment.gifslashapp.viewmodels.HistoryViewModel;
@@ -67,12 +62,9 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
         mHistoryViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
 
         // Dynamically update view
-        mHistoryViewModel.getHistory().observe(this, new Observer<List<History>>() {
-            @Override
-            public void onChanged(@Nullable List<History> historyList) {
-                mHistoryList = historyList;
-                mHistoryAdapter.refreshList(historyList);
-            }
+        mHistoryViewModel.getHistory().observe(this, historyList -> {
+            mHistoryList = historyList;
+            mHistoryAdapter.refreshList(historyList);
         });
 
         // Recognize swipe gesture of the user
@@ -97,14 +89,10 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
                         // Give the user the chance to restore the deleted history card
                         mSnackBar = Snackbar.make(findViewById(R.id.rv_history), "Deleted: " +
                                 mHistoryList.get(position).getTitle(), Snackbar.LENGTH_LONG).setAction(R.string.undo_string,
-                                new View.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(View v) {
-                                        mUserFeedback.showToastShort(getString(R.string.restored));
-                                        mHistoryViewModel.insert(mHistoryGifSticker);
-                                        mHistoryAdapter.refreshList(mHistoryList);
-                                    }
+                                v -> {
+                                    mUserFeedback.showToastShort(getString(R.string.restored));
+                                    mHistoryViewModel.insert(mHistoryGifSticker);
+                                    mHistoryAdapter.refreshList(mHistoryList);
                                 });
                         mSnackBar.show();
                     }
@@ -143,14 +131,10 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
 
             mSnackBar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.deleted_message),
                     Snackbar.LENGTH_LONG).setAction(R.string.undo_string,
-                    new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            mUserFeedback.showToastLong(getString(R.string.restored));
-                            mHistoryViewModel.insertAll(mTempHistoryList);
-                            mHistoryAdapter.refreshList(mHistoryList);
-                        }
+                    v -> {
+                        mUserFeedback.showToastLong(getString(R.string.restored));
+                        mHistoryViewModel.insertAll(mTempHistoryList);
+                        mHistoryAdapter.refreshList(mHistoryList);
                     });
             mSnackBar.show();
             return true;

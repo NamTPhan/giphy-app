@@ -79,12 +79,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             favoriteDescription = itemView.findViewById(R.id.card_cell_description);
             favoriteDateSaved = itemView.findViewById(R.id.card_cell_date_saved);
 
-            favoriteCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    favoriteListener.onCardClick(favoriteList.get(getAdapterPosition()));
-                }
-            });
+            favoriteCard.setOnClickListener(v -> favoriteListener.onCardClick(favoriteList.get(getAdapterPosition())));
         }
     }
 

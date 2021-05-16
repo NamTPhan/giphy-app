@@ -29,47 +29,22 @@ public class HistoryRepository {
     }
 
     public void insert(final History historyGifSticker) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mHistoryDao.insert(historyGifSticker);
-            }
-        });
+        mExecutor.execute(() -> mHistoryDao.insert(historyGifSticker));
     }
 
     public void insertAll(final List<History> historyList) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mHistoryDao.insert(historyList);
-            }
-        });
+        mExecutor.execute(() -> mHistoryDao.insert(historyList));
     }
 
     public void update(final History historyGifSticker) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mHistoryDao.update(historyGifSticker);
-            }
-        });
+        mExecutor.execute(() -> mHistoryDao.update(historyGifSticker));
     }
 
     public void delete(final History historyGifSticker) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mHistoryDao.delete(historyGifSticker);
-            }
-        });
+        mExecutor.execute(() -> mHistoryDao.delete(historyGifSticker));
     }
 
     public void deleteAll(final List<History> historyList) {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                mHistoryDao.delete(historyList);
-            }
-        });
+        mExecutor.execute(() -> mHistoryDao.delete(historyList));
     }
 }

@@ -1,18 +1,14 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -80,35 +76,27 @@ public class MainActivity extends AppCompatActivity {
         mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
 
         // Bottom navigation switch
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                selectedFragment = null;
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            selectedFragment = null;
 
-                switch (menuItem.getItemId()) {
-                    case R.id.nav_trending:
-                        selectedFragment = new TrendingFragment();
-                        break;
-                    case R.id.nav_categories:
-                        selectedFragment = new CategoriesFragment();
-                        break;
-                    case R.id.nav_favorite:
-                        selectedFragment = new FavoritesFragment();
-                        break;
-                }
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                return true;
+            switch (menuItem.getItemId()) {
+                case R.id.nav_trending:
+                    selectedFragment = new TrendingFragment();
+                    break;
+                case R.id.nav_categories:
+                    selectedFragment = new CategoriesFragment();
+                    break;
+                case R.id.nav_favorite:
+                    selectedFragment = new FavoritesFragment();
+                    break;
             }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            return true;
         });
 
         // Show error in toast if api call fails
-        mGiphyViewModel.getError().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String message) {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
+        mGiphyViewModel.getError().observe(this, message -> Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show());
     }
 
     /**
@@ -127,42 +115,24 @@ public class MainActivity extends AppCompatActivity {
      */
     private void fabActions() {
         // Open and close child floating buttons
-        fabPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isOpen) {
-                    fabPlus.startAnimation(fabRotateAntiClockwise);
-                    fabAnimationVisibilityClickable(fabClose, View.INVISIBLE, false);
-                } else {
-                    fabPlus.startAnimation(fabRotateClockwise);
-                    fabAnimationVisibilityClickable(fabOpen, View.VISIBLE, true);
-                }
+        fabPlus.setOnClickListener(v -> {
+            if (isOpen) {
+                fabPlus.startAnimation(fabRotateAntiClockwise);
+                fabAnimationVisibilityClickable(fabClose, View.INVISIBLE, false);
+            } else {
+                fabPlus.startAnimation(fabRotateClockwise);
+                fabAnimationVisibilityClickable(fabOpen, View.VISIBLE, true);
             }
         });
 
         // Open search window
-        fabSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SearchActivity.class));
-            }
-        });
+        fabSearch.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
 
         // Go to display Giphy activity and retrieve random gif
-        fabRandomGif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToDisplayRandomGifAnimation(RANDOM_GIF_CODE);
-            }
-        });
+        fabRandomGif.setOnClickListener(v -> goToDisplayRandomGifAnimation(RANDOM_GIF_CODE));
 
         // Go to display Giphy activity and retrieve random sticker
-        fabRandomSticker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToDisplayRandomGifAnimation(RANDOM_STICKER_CODE);
-            }
-        });
+        fabRandomSticker.setOnClickListener(v -> goToDisplayRandomGifAnimation(RANDOM_STICKER_CODE));
     }
 
     private void goToDisplayRandomGifAnimation(int statusCode) {

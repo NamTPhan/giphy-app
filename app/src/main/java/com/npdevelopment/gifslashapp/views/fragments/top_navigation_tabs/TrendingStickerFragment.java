@@ -67,12 +67,9 @@ public class TrendingStickerFragment extends Fragment {
         sharedGiphyViewModel.getTrendingGiphyStickers(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
 
         // Dynamically update view
-        sharedGiphyViewModel.getAllTrendingStickers().observe(this, new Observer<List<Giphy>>() {
-            @Override
-            public void onChanged(@Nullable List<Giphy> stickers) {
-                mStickersList = stickers;
-                trendingStickersAdapter.refreshList(stickers);
-            }
+        sharedGiphyViewModel.getAllTrendingStickers().observe(this, stickers -> {
+            mStickersList = stickers;
+            trendingStickersAdapter.refreshList(stickers);
         });
 
     }

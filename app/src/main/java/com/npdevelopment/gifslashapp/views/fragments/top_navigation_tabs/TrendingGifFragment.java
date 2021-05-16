@@ -67,12 +67,9 @@ public class TrendingGifFragment extends Fragment {
         sharedGiphyViewModel.getTrendingGiphyGifs(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
 
         // Dynamically update view
-        sharedGiphyViewModel.getAllTrendingGifs().observe(this, new Observer<List<Giphy>>() {
-            @Override
-            public void onChanged(@Nullable List<Giphy> gifs) {
-                mGifsList = gifs;
-                trendingGifsAdapter.refreshList(gifs);
-            }
+        sharedGiphyViewModel.getAllTrendingGifs().observe(this, gifs -> {
+            mGifsList = gifs;
+            trendingGifsAdapter.refreshList(gifs);
         });
     }
 }

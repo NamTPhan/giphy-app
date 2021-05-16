@@ -7,11 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
 
 import com.npdevelopment.gifslashapp.R;
@@ -52,44 +49,31 @@ public class SearchActivity extends AppCompatActivity {
         setSizePopupWindow();
 
         // If checkbox gif is checked, checkbox sticker disabled
-        mCheckBoxGif.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCheckBoxSticker.setEnabled(isChecked ? false : true);
-            }
-        });
+        mCheckBoxGif.setOnCheckedChangeListener((buttonView, isChecked) -> mCheckBoxSticker.setEnabled(isChecked ? false : true));
 
         // If checkbox sticker is checked, checkbox gif disabled
-        mCheckBoxSticker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCheckBoxGif.setEnabled(isChecked ? false : true);
-            }
-        });
+        mCheckBoxSticker.setOnCheckedChangeListener((buttonView, isChecked) -> mCheckBoxGif.setEnabled(isChecked ? false : true));
 
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(mSearhTerm.getText()) || TextUtils.isEmpty(mRecordLimit.getText())) {
-                    mUserFeedback.showToastShort(getString(R.string.fields_required));
+        mSearchBtn.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(mSearhTerm.getText()) || TextUtils.isEmpty(mRecordLimit.getText())) {
+                mUserFeedback.showToastShort(getString(R.string.fields_required));
+            } else {
+
+                if (checkBoxCheck()) {
+                    mSearchData = new SearchData(mSearhTerm.getText().toString(),
+                            Integer.parseInt(mRecordLimit.getText().toString()),
+                            mRatingSpinner.getSelectedItem().toString(),
+                            mLanguageSpinner.getSelectedItem().toString());
+
+                    Intent intent = new Intent(SearchActivity.this, DisplaySearchActivity.class);
+                    intent.putExtra(SEARCH_DATA_KEY, mSearchData);
+                    intent.putExtra(CHECKBOX_SELECTION, checkBoxSelection);
+                    intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.DEFAULT_SEARCH_CODE);
+                    startActivity(intent);
                 } else {
-
-                    if (checkBoxCheck()) {
-                        mSearchData = new SearchData(mSearhTerm.getText().toString(),
-                                Integer.parseInt(mRecordLimit.getText().toString()),
-                                mRatingSpinner.getSelectedItem().toString(),
-                                mLanguageSpinner.getSelectedItem().toString());
-
-                        Intent intent = new Intent(SearchActivity.this, DisplaySearchActivity.class);
-                        intent.putExtra(SEARCH_DATA_KEY, mSearchData);
-                        intent.putExtra(CHECKBOX_SELECTION, checkBoxSelection);
-                        intent.putExtra(MainActivity.GIPHY_CODE_KEY, MainActivity.DEFAULT_SEARCH_CODE);
-                        startActivity(intent);
-                    } else {
-                        mUserFeedback.showToastShort(getString(R.string.checkbox_failed));
-                    }
-
+                    mUserFeedback.showToastShort(getString(R.string.checkbox_failed));
                 }
+
             }
         });
     }

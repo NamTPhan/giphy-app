@@ -79,12 +79,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             historyGiphyDescription = itemView.findViewById(R.id.card_cell_description);
             historyGiphyDateSaved = itemView.findViewById(R.id.card_cell_date_saved);
 
-            historyGiphyCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    historyCardListener.onCardClick(historyList.get(getAdapterPosition()));
-                }
-            });
+            historyGiphyCard.setOnClickListener(v -> historyCardListener.onCardClick(historyList.get(getAdapterPosition())));
         }
     }
 
