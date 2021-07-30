@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -74,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
         disableActionBarInLandScapeMode();
 
         // Link the correct ViewModel to the activity
-        mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
+        mGiphyViewModel = new ViewModelProvider(this).get(GiphyViewModel.class);
 
         // Bottom navigation switch
-        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+        bottomNavigationView.setOnItemSelectedListener(menuItem -> {
             selectedFragment = null;
 
             switch (menuItem.getItemId()) {

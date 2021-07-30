@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,7 +60,7 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
         mRecyclerView.setAdapter(mHistoryAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mHistoryViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
+        mHistoryViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
 
         // Dynamically update view
         mHistoryViewModel.getHistory().observe(this, historyList -> {

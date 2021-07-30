@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -63,11 +63,11 @@ public class TrendingGifFragment extends Fragment {
 
         Glide.with(getContext()).load(R.drawable.giphy_horizontal_light).into(poweredByGiphy);
 
-        sharedGiphyViewModel = ViewModelProviders.of(getActivity()).get(GiphyViewModel.class);
+        sharedGiphyViewModel = new ViewModelProvider(this).get(GiphyViewModel.class);
         sharedGiphyViewModel.getTrendingGiphyGifs(DEFAULT_RECORD_LIMIT, DEFAULT_RATING);
 
         // Dynamically update view
-        sharedGiphyViewModel.getAllTrendingGifs().observe(this, gifs -> {
+        sharedGiphyViewModel.getAllTrendingGifs().observe(getViewLifecycleOwner(), gifs -> {
             mGifsList = gifs;
             trendingGifsAdapter.refreshList(gifs);
         });

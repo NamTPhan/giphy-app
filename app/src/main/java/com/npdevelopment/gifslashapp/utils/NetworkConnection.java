@@ -17,15 +17,16 @@ public class NetworkConnection {
         boolean mobileNetworkConnection = false;
 
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo networkInfo : netInfo) {
-            if (networkInfo.getTypeName().equalsIgnoreCase("WIFI"))
-                if (networkInfo.isConnected())
-                    wifiConnection = true;
-            if (networkInfo.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (networkInfo.isConnected())
-                    mobileNetworkConnection = true;
-        }
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        if (networkInfo.getTypeName().equalsIgnoreCase("WIFI"))
+            if (networkInfo.isConnected())
+                wifiConnection = true;
+
+        if (networkInfo.getTypeName().equalsIgnoreCase("MOBILE"))
+            if (networkInfo.isConnected())
+                mobileNetworkConnection = true;
+
         return wifiConnection || mobileNetworkConnection;
     }
 }
