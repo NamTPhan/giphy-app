@@ -20,16 +20,13 @@
         <activity android:name=".views.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".views.ui.DisplayGiphyActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".views.ui.SearchActivity"
-            android:theme="@style/AppTheme.SettingsWindowTheme" />
+
+        <activity  android:name=".views.ui.DisplayGiphyActivity" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".views.ui.SearchActivity" android:theme="@style/AppTheme.SettingsWindowTheme" />
+
     </application>
 
 </manifest>
