@@ -40,32 +40,16 @@ public class SearchData implements Parcelable {
         return searchQuery;
     }
 
-    public void setSearchQuery(String searchQuery) {
-        this.searchQuery = searchQuery;
-    }
-
     public int getRecordLimit() {
         return recordLimit;
-    }
-
-    public void setRecordLimit(int recordLimit) {
-        this.recordLimit = recordLimit;
     }
 
     public String getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
     public String getLanguage() {
         return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     @Override

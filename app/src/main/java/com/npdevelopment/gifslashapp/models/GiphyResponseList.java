@@ -16,7 +16,4 @@ public class GiphyResponseList {
         return data;
     }
 
-    public Pagination getPagination() {
-        return pagination;
-    }
 }

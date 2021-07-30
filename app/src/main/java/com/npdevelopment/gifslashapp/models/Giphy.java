@@ -50,20 +50,8 @@ public class Giphy implements Parcelable {
         return id;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public int getIsSticker() {
-        return isSticker;
     }
 
     public Images getImages() {

@@ -1,9 +1,10 @@
 package com.npdevelopment.gifslashapp.models;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "favorites_table")
 public class Favorite implements Parcelable {
