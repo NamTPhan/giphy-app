@@ -2,8 +2,6 @@ package com.npdevelopment.gifslashapp.views.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -11,6 +9,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.SearchData;
 import com.npdevelopment.gifslashapp.utils.UserFeedback;

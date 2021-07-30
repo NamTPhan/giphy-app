@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
@@ -13,6 +12,8 @@ import android.widget.ImageView;
 import com.npdevelopment.gifslashapp.R;
 
 import static com.npdevelopment.gifslashapp.views.ui.MainActivity.GIPHY_CODE_KEY;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class RandomGifAnimationActivity extends AppCompatActivity {
 
