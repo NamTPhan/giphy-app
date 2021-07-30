@@ -19,13 +19,13 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_random_gif_animation.xml" value="0.5536458333333333" />
         <entry key="app/src/main/res/layout/activity_random_giphy_history.xml" value="0.5536458333333333" />
-        <entry key="app/src/main/res/layout/activity_search.xml" value="0.5536458333333333" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.3811252268602541" />
         <entry key="app/src/main/res/layout/category_cell.xml" value="0.5536458333333333" />
         <entry key="app/src/main/res/layout/fragment_categories.xml" value="0.5536458333333333" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.5536458333333333" />
         <entry key="app/src/main/res/layout/fragment_trending.xml" value="0.5677083333333334" />
-        <entry key="app/src/main/res/layout/fragment_trending_gifs.xml" value="0.5677083333333334" />
-        <entry key="app/src/main/res/layout/fragment_trending_stickers.xml" value="0.5677083333333334" />
+        <entry key="app/src/main/res/layout/fragment_trending_gifs.xml" value="0.27608915906788245" />
+        <entry key="app/src/main/res/layout/fragment_trending_stickers.xml" value="0.33" />
         <entry key="app/src/main/res/layout/gif_sticker_cell.xml" value="0.5677083333333334" />
         <entry key="app/src/main/res/layout/giphy_card_cell.xml" value="0.5677083333333334" />
         <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.5677083333333334" />
