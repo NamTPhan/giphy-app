@@ -14,9 +14,9 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.5697916666666667" />
         <entry key="app/src/main/res/drawable/ic_list_black_24dp.xml" value="0.5697916666666667" />
         <entry key="app/src/main/res/drawable/ic_trending_up_black_24dp.xml" value="0.5697916666666667" />
-        <entry key="app/src/main/res/layout/activity_display_giphy.xml" value="0.5536458333333333" />
+        <entry key="app/src/main/res/layout/activity_display_giphy.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_display_search.xml" value="0.5536458333333333" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.5536458333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_random_gif_animation.xml" value="0.5536458333333333" />
         <entry key="app/src/main/res/layout/activity_random_giphy_history.xml" value="0.5536458333333333" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.5536458333333333" />

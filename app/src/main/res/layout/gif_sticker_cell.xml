@@ -13,6 +13,7 @@
         android:scaleType="fitXY"
         app:srcCompat="@drawable/placeholder"
         tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
