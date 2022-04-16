@@ -1,7 +1,6 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
 import android.app.DownloadManager;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -9,17 +8,19 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.bumptech.glide.Glide;
+import com.google.android.material.textfield.TextInputEditText;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.Favorite;
 import com.npdevelopment.gifslashapp.models.Giphy;
@@ -86,9 +87,9 @@ public class DisplayGiphyActivity extends AppCompatActivity {
         Glide.with(this).load(R.drawable.giphy_horizontal_light).into(mPoweredByGiphy);
 
         // Get View Model
-        mFavoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
-        mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
-        mHistoryViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
+        mFavoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
+        mGiphyViewModel =  new ViewModelProvider(this).get(GiphyViewModel.class);
+        mHistoryViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
 
         // Creating instances of several classes
         mPermissions = new Permissions(DisplayGiphyActivity.this);
@@ -150,6 +151,8 @@ public class DisplayGiphyActivity extends AppCompatActivity {
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.

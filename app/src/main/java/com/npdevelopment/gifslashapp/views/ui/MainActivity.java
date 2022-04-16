@@ -1,13 +1,8 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,6 +10,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.database.GiphyRoomDatabase;
 import com.npdevelopment.gifslashapp.viewmodels.GiphyViewModel;
@@ -73,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
         disableActionBarInLandScapeMode();
 
         // Link the correct ViewModel to the activity
-        mGiphyViewModel = ViewModelProviders.of(this).get(GiphyViewModel.class);
+        mGiphyViewModel = new ViewModelProvider(this).get(GiphyViewModel.class);
 
         // Bottom navigation switch
-        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+        bottomNavigationView.setOnItemSelectedListener(menuItem -> {
             selectedFragment = null;
 
             switch (menuItem.getItemId()) {

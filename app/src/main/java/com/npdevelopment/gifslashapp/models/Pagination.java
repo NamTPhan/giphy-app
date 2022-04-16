@@ -10,11 +10,4 @@ public class Pagination {
     @SerializedName("count")
     private int count;
 
-    public int getTotal_count() {
-        return total_count;
-    }
-
-    public int getCount() {
-        return count;
-    }
 }

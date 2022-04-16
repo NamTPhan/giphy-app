@@ -1,7 +1,8 @@
 package com.npdevelopment.gifslashapp.database.repositories;
 
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
+
+import androidx.lifecycle.LiveData;
 
 import com.npdevelopment.gifslashapp.database.GiphyRoomDatabase;
 import com.npdevelopment.gifslashapp.database.dao.HistoryDao;

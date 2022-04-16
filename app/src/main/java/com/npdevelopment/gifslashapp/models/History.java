@@ -1,9 +1,10 @@
 package com.npdevelopment.gifslashapp.models;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "history_table")
 public class History implements Parcelable {
@@ -69,18 +70,6 @@ public class History implements Parcelable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDateSaved(String dateSaved) {
-        this.dateSaved = dateSaved;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     @Override

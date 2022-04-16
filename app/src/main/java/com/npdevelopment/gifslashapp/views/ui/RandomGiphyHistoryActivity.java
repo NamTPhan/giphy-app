@@ -1,17 +1,18 @@
 package com.npdevelopment.gifslashapp.views.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.npdevelopment.gifslashapp.R;
 import com.npdevelopment.gifslashapp.models.History;
 import com.npdevelopment.gifslashapp.utils.UserFeedback;
@@ -59,7 +60,7 @@ public class RandomGiphyHistoryActivity extends AppCompatActivity implements His
         mRecyclerView.setAdapter(mHistoryAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mHistoryViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
+        mHistoryViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
 
         // Dynamically update view
         mHistoryViewModel.getHistory().observe(this, historyList -> {

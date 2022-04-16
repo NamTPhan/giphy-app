@@ -3,7 +3,6 @@
     package="com.npdevelopment.gifslashapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -14,22 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.ui.RandomGiphyHistoryActivity"></activity>
+        <activity android:name=".views.ui.RandomGiphyHistoryActivity" />
         <activity android:name=".views.ui.RandomGifAnimationActivity" />
         <activity android:name=".views.ui.DisplaySearchActivity" />
-        <activity android:name=".views.ui.MainActivity">
+        <activity android:name=".views.ui.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".views.ui.DisplayGiphyActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".views.ui.SearchActivity"
-            android:theme="@style/AppTheme.SettingsWindowTheme" />
+
+        <activity  android:name=".views.ui.DisplayGiphyActivity" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".views.ui.SearchActivity" android:theme="@style/AppTheme.SettingsWindowTheme" />
+
     </application>
 
 </manifest>
